@@ -1,0 +1,105 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    background: #d2d4d7;
+}
+
+#display {
+    width: auto;
+    height: 100%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+nav {
+    width: 400px;
+    float: left;
+    background: #556975;
+    margin: 15px;
+    border: 2px solid #2b373d;
+    padding-bottom: 10px;
+    overflow: scroll;
+    color: white;
+    font: 14px Helvetica, sans-serif;
+}
+
+h1 {
+    margin: 0;
+    padding: 10px;
+    background: #2b373d;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+}
+
+textarea {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: calc(100% - 20px);
+    height: 200px;
+    margin: 0 10px;
+    border: none;
+    padding: 10px;
+    color: #222;
+    resize: vertical;
+    font: inherit;
+}
+
+label {
+    display: block;
+    margin: 10px 10px 14px 10px;
+}
+
+input {
+    float: right;
+    width: 60%;
+    margin: 0;
+    border: none;
+    padding: 2px 4px;
+    color: #222;
+    font: inherit;
+}
+
+p {
+    margin: 10px;
+}
+
+button {
+    display: inline-block;
+    width: calc(50% - 15px);
+    height: 70px;
+    padding: 0;
+    font: inherit;
+}
+
+button span {
+    font-size: 0.8em;
+}
+
+button.png {
+    margin: 4px 5px 0 10px;
+    background: #8cc63e;
+    border: 2px solid #364d18;
+}
+
+button.png:active {
+    border: 2px solid #23320f;
+    background: #364d18;
+    color: #8cc63e;
+}
+
+button.svg {
+    margin: 4px 10px 0 5px;
+    background: #bf64a7;
+    border: 2px solid #613354;
+}
+
+button.svg:active {
+    border: 2px solid #2d1727;
+    background: #613354;
+    color: #bf64a7;
+}

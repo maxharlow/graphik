@@ -1,0 +1,22 @@
+{
+    "width": 600,
+    "padding": {
+        "intertitle": 10,
+        "prechart": 20,
+        "postchart": 10,
+        "top": 15,
+        "right": 15,
+        "bottom": 15,
+        "left": 15
+    },
+    "bar": {
+        "height": 30,
+        "padding": {
+            "inner": 0.2,
+            "outer": 0,
+            "tickX": 4,
+            "tickY": 4,
+            "label": 5
+        }
+    }
+}

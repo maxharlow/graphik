@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Graphik</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1">
+    <link rel="stylesheet" href="index.css"/>
+    <script src="https://cdn.rawgit.com/mbostock/d3/v3.5.5/d3.min.js"></script>
+    <script src="https://cdn.rawgit.com/gabelerner/canvg/b4f5b490/canvg.js"></script> 
+    <script src="chart.js"></script>
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <nav>
+      <h1>Graphik</h1>
+      <p>Paste data from a spreadsheet here:</p>
+      <textarea></textarea>
+      <label>Title<input name="title"></label>
+      <label>Subtitle<input name="subtitle" placeholder="optional"></label>
+      <label>Tick interval<input name="tickInterval"></label>
+      <label>Data prefix<input name="dataPrefix" placeholder="optional"></label>
+      <label>Data suffix<input name="dataSuffix" placeholder="optional"></label>
+      <label>Source<input name="source"></label>
+      <label>Credit<input name="credit"></label>
+      <button class="png">Export Raster<br/><span>(PNG)</span></button><button class="svg">Export Vector<br/><span>(SVG)</span></button>
+    </nav>
+    <div id="display"></div>
+  </body>
+</html>
