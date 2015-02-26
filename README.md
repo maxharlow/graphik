@@ -1,4 +1,4 @@
 Graphik
 =======
 
-Creates simple static graphics.
+Creates simple static charts.

@@ -17,7 +17,7 @@ function Chart(display, layout) {
             + layout.padding.bottom
 
         svg
-	    .attr('shape-rendering', 'crispEdges')
+            .attr('shape-rendering', 'crispEdges')
             .attr('width', layout.width)
             .attr('height', height)
     }
@@ -32,16 +32,16 @@ function Chart(display, layout) {
         var header = svg.append('g')
             .attr('id', 'header')
             .attr('transform', 'translate(' + x + ', ' + y + ')')
-	
+
         var title = header.append('text')
             .attr('id', 'title')
-	    .attr('dy', '1em')
+            .attr('dy', '1em')
             .text(config.title)
 
         if (config.subtitle !== '') {
             var subtitle = header.append('text')
                 .attr('id', 'subtitle')
-		.attr('dy', '1em')
+                .attr('dy', '1em')
                 .text(config.subtitle)
 
             subtitle.attr('y', title.node().getBBox().height + layout.padding.intertitle)
@@ -51,7 +51,7 @@ function Chart(display, layout) {
     }
 
     function drawFooter(svg, config, x, y) {
-	var footer = svg.append('g')
+        var footer = svg.append('g')
             .attr('id', 'footer')
             .attr('transform', 'translate(' + x + ', ' + y + ')')
 
@@ -60,23 +60,23 @@ function Chart(display, layout) {
             .text(config.credit)
 
         credit.attr('y', credit.node().getBBox().height)
-	
+
         var source = footer.append('text')
             .attr('id', 'credit')
             .text(config.source)
 
         source.attr('x', layout.width - layout.padding.left - layout.padding.right - source.node().getBBox().width)
-	source.attr('y', credit.node().getBBox().height)
+        source.attr('y', credit.node().getBBox().height)
 
         return footer
     }
 
     function drawBar(svg, config, data, x, y) {
         var dataMax = Math.max.apply(Math, data.map(function (d) { return d.value }))
-	var tickNumber = Math.ceil(dataMax / config.tickInterval)
+        var tickNumber = Math.ceil(dataMax / config.tickInterval)
         var tickRequired = tickNumber * config.tickInterval
-	var tickExtras = (Math.abs(tickRequired - dataMax) < config.tickInterval / 4 ? 1 : 0) * config.tickInterval
-	var tickMaximum = tickRequired + tickExtras
+        var tickExtras = (Math.abs(tickRequired - dataMax) < config.tickInterval / 4 ? 1 : 0) * config.tickInterval
+        var tickMaximum = tickRequired + tickExtras
         var tickValues = d3.range(0, tickMaximum + 1, config.tickInterval)
 
         var chart = svg.append('g')
@@ -152,7 +152,7 @@ function Chart(display, layout) {
             .attr('y', layout.bar.height / 2)
             .attr('dominant-baseline', 'central')
             .text(function (d) { return config.dataPrefix + d.value + config.dataSuffix })
-	
+
         return chart
     }
 
