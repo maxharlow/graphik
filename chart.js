@@ -74,9 +74,7 @@ function Chart(display, layout) {
     function drawBar(svg, config, data, x, y) {
         var dataMax = Math.max.apply(Math, data.map(function (d) { return d.value }))
         var tickNumber = Math.ceil(dataMax / config.tickInterval)
-        var tickRequired = tickNumber * config.tickInterval
-        var tickExtras = (Math.abs(tickRequired - dataMax) < config.tickInterval / 4 ? 0.5 : 0) * config.tickInterval
-        var tickMaximum = tickRequired + tickExtras
+        var tickMaximum = (tickNumber * config.tickInterval) + (config.tickInterval * 0.5)
         var tickValues = d3.range(0, tickMaximum + 1, config.tickInterval)
 
         var chart = svg.append('g')
