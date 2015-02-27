@@ -16,9 +16,9 @@
         "padding": {
             "inner": 0.2,
             "outer": 0,
-            "axisX": 5,
+            "axisX": 0,
             "axisY": 0,
-            "tickX": 5,
+            "tickX": 2,
             "tickY": 5,
             "label": 5
         }

@@ -75,7 +75,7 @@ function Chart(display, layout) {
         var dataMax = Math.max.apply(Math, data.map(function (d) { return d.value }))
         var tickNumber = Math.ceil(dataMax / config.tickInterval)
         var tickRequired = tickNumber * config.tickInterval
-        var tickExtras = (Math.abs(tickRequired - dataMax) < config.tickInterval / 4 ? 1 : 0) * config.tickInterval
+        var tickExtras = (Math.abs(tickRequired - dataMax) < config.tickInterval / 4 ? 0.5 : 0) * config.tickInterval
         var tickMaximum = tickRequired + tickExtras
         var tickValues = d3.range(0, tickMaximum + 1, config.tickInterval)
 
