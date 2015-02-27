@@ -11,11 +11,15 @@
     },
     "bar": {
         "height": 30,
+        "tickSizeX": 8,
+        "tickSizeY": 0,
         "padding": {
             "inner": 0.2,
             "outer": 0,
-            "tickX": 4,
-            "tickY": 4,
+            "axisX": 5,
+            "axisY": 0,
+            "tickX": 5,
+            "tickY": 5,
             "label": 5
         }
     }

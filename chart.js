@@ -87,12 +87,12 @@ function Chart(display, layout) {
         
         var yScale = d3.scale.ordinal()
             .domain(d3.range(data.length))
-            .rangeRoundBands([0, seriesHeight], layout.bar.padding.inner, layout.bar.padding.outer)
+            .rangeBands([0, seriesHeight], layout.bar.padding.inner, layout.bar.padding.outer)
 
-        var yAxis = d3.svg.axis() // todo no tick lines?
+        var yAxis = d3.svg.axis()
             .orient('left')
             .scale(yScale)
-            .tickSize(1)
+            .tickSize(layout.bar.tickSizeY, 0)
             .tickPadding(layout.bar.padding.tickY)
             .tickValues(d3.range(data.length))
             .tickFormat(function (d) { return data[d].label })
@@ -103,7 +103,7 @@ function Chart(display, layout) {
 
         yAxisElement.attr('transform', 'translate(' + yAxisElement.node().getBBox().width + ', ' + 0 + ')')
         
-        var seriesWidth = layout.width - layout.padding.left - yAxisElement.node().getBBox().width - layout.padding.right
+        var seriesWidth = layout.width - layout.padding.left - yAxisElement.node().getBBox().width - layout.bar.padding.axisY - layout.padding.right
 
         var xScale = d3.scale.linear()
             .domain([0, tickMaximum])
@@ -112,14 +112,14 @@ function Chart(display, layout) {
         var xAxis = d3.svg.axis()
             .orient('bottom')
             .scale(xScale)
-            .tickSize(1)
+            .tickSize(layout.bar.tickSizeX, 0)
             .tickPadding(layout.bar.padding.tickX)
             .tickValues(tickValues)
             .tickFormat(function (d) { return config.dataPrefix + d + config.dataSuffix })
 
         chart.append('g')
             .attr('id', 'x-axis')
-            .attr('transform', 'translate(' + yAxisElement.node().getBBox().width + ', ' + seriesHeight + ')')
+            .attr('transform', 'translate(' + (yAxisElement.node().getBBox().width + layout.bar.padding.axisY) + ', ' + (seriesHeight + layout.bar.padding.axisX) + ')')
             .call(xAxis)
 
         chart.append('g')
@@ -135,7 +135,7 @@ function Chart(display, layout) {
 
         var series = chart.append('g')
             .attr('id', 'series')
-            .attr('transform', function (_, i) { return 'translate(' + yAxisElement.node().getBBox().width + ',' + 0 + ')' })
+            .attr('transform', function (_, i) { return 'translate(' + (yAxisElement.node().getBBox().width + layout.bar.padding.axisY) + ',' + 0 + ')' })
 
         var bars = series.selectAll('g')
             .data(data)
