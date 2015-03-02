@@ -3,11 +3,12 @@
     "padding": {
         "intertitle": 10,
         "prechart": 20,
-        "postchart": 10,
-        "top": 15,
-        "right": 15,
-        "bottom": 15,
-        "left": 15
+        "postchart": 20,
+        "interfoot": 10,
+        "top": 10,
+        "right": 10,
+        "bottom": 10,
+        "left": 10
     },
     "bar": {
         "height": 30,

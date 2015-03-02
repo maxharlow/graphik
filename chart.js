@@ -55,13 +55,6 @@ function Chart(display, layout) {
             .attr('id', 'footer')
             .attr('transform', 'translate(' + x + ', ' + y + ')')
 
-        footer.append('line')
-            .attr('id', 'footline')
-            .attr('x1', 0 - layout.padding.left)
-            .attr('x2', layout.width - layout.padding.left)
-            .attr('y1', footer.node().getBBox().top)
-            .attr('y2', footer.node().getBBox().top)
-
         var credit = footer.append('text')
             .attr('id', 'credit')
             .attr('dy', '1em')
@@ -73,6 +66,17 @@ function Chart(display, layout) {
             .text(config.source)
 
         source.attr('x', layout.width - layout.padding.left - layout.padding.right - source.node().getBBox().width)
+
+        if (config.credit !== '' || config.source !== '') {
+            credit.attr('y', layout.padding.interfoot)
+            source.attr('y', layout.padding.interfoot)
+            footer.append('line')
+                .attr('id', 'footline')
+                .attr('x1', 0)
+                .attr('x2', layout.width - layout.padding.left - layout.padding.right)
+                .attr('y1', footer.node().getBBox().top)
+                .attr('y2', footer.node().getBBox().top)
+        }
 
         return footer
     }
