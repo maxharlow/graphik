@@ -14,10 +14,7 @@ function Graphik() {
                 save(chart.toSVG(), filename() + '.svg')
             })
             document.querySelector('textarea').value = 'Country\tAmount\nUS\t5.6\nNetherlands\t20.4\nUK\t21.3\nBelgium\t81.3\nItaly\t120.6\nFrance\t148.2'
-            document.querySelector('input[name=title]').value = 'An example graph'
             document.querySelector('input[name=tickInterval]').value = '25'
-            document.querySelector('input[name=credit]').value = 'A news organisation'
-            document.querySelector('input[name=source]').value = 'Source: Example data'
             update(chart)
         })
     }
