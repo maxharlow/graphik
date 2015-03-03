@@ -93,8 +93,10 @@ function GraphikChart(display, layout) {
             .attr('id', 'chart')
             .attr('transform', 'translate(' + x + ', ' + y + ')')
 
-        var seriesHeight = (layout.bar.height * data.length) + ((layout.bar.height * layout.bar.padding.inner) * (data.length - 1)) + (layout.bar.padding.outer * 2)
-        
+        var seriesHeight = (layout.bar.height * data.length) // height of all the bars
+	    + ((layout.bar.height * layout.bar.padding.inner) * (data.length)) // height of the inner bar spacing
+	    + ((layout.bar.height * layout.bar.padding.outer) * 2) // height of the outer bar spacing
+
         var yScale = d3.scale.ordinal()
             .domain(d3.range(data.length))
             .rangeBands([0, seriesHeight], layout.bar.padding.inner, layout.bar.padding.outer)
@@ -155,11 +157,11 @@ function GraphikChart(display, layout) {
 
         bars.append('rect')
             .attr('width', function (d) { return xScale(d.value) })
-            .attr('height', layout.bar.height)
+            .attr('height', yScale.rangeBand())
 
         bars.append('text')
             .attr('x', function (d) { return xScale(d.value) + layout.bar.padding.label })
-            .attr('y', layout.bar.height / 2)
+            .attr('y', yScale.rangeBand() / 2)
             .attr('dominant-baseline', 'central')
             .text(function (d) { return config.dataPrefix + d.value + config.dataSuffix })
 
