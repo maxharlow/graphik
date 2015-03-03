@@ -1,7 +1,7 @@
 {
     "width": 600,
     "padding": {
-        "intertitle": 10,
+        "intertitle": 5,
         "prechart": 20,
         "postchart": 20,
         "interfoot": 5,
