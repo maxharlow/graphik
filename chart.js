@@ -1,4 +1,4 @@
-function Chart(display, layout) {
+function GraphikChart(display, layout) {
 
     this.draw = function (data, config) {
         d3.select(display).select('svg').remove()
@@ -87,6 +87,8 @@ function Chart(display, layout) {
         var tickMaximum = (tickNumber * config.tickInterval) + (config.tickInterval * 0.5)
         var tickValues = d3.range(0, tickMaximum + 1, config.tickInterval)
 
+	svg.attr('class', 'bar')
+
         var chart = svg.append('g')
             .attr('id', 'chart')
             .attr('transform', 'translate(' + x + ', ' + y + ')')
@@ -110,7 +112,7 @@ function Chart(display, layout) {
             .call(yAxis)
 
         yAxisElement.attr('transform', 'translate(' + yAxisElement.node().getBBox().width + ', ' + 0 + ')')
-        
+
         var seriesWidth = layout.width - layout.padding.left - yAxisElement.node().getBBox().width - layout.bar.padding.axisY - layout.padding.right
 
         var xScale = d3.scale.linear()

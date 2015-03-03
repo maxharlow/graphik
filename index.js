@@ -1,8 +1,8 @@
 function Graphik() {
 
     function setup() {
-        request('layout.json', function (layout) {
-            var chart = new Chart('#display', layout)
+        request('vendor-layout.json', function (layout) {
+            var chart = new GraphikChart('#display', layout)
             var controls = document.querySelectorAll('input,textarea')
             for (var i = 0; i < controls.length; i++) controls[i].addEventListener('input', function () {
                 update(chart)
@@ -31,7 +31,6 @@ function Graphik() {
             credit: document.querySelector('input[name=credit]').value
         }
         chart.draw(data, config)
-        filename()
     }
 
     function parse(value) {
