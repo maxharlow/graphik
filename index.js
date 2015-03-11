@@ -50,7 +50,7 @@ function Graphik() {
     }
 
     function filename() {
-        return document.querySelector('input[name=title]').value.replace(/\W+/g, '-').replace(/-$/, '').toLowerCase()
+        return document.querySelector('input[name=title]').value.replace(/\W+/g, '-').replace(/-$/, '').toLowerCase() || 'untitled'
     }
 
     function save(data, filename) {
