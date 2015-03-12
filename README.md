@@ -14,6 +14,12 @@ Paste your data in, configure the title and other furniture, and export either a
 One of the reasons for creating Graphik rather than using [other similar tools] (#similar-tools) is that Graphik separates the visual style of the chart from the rest of the application. This means it is easy to customise the look of charts created by Graphik. By default, Graphik uses the house style of [the Bureau of Investigative Journalism] (http://www.thebureauinvestigates.com/). This is controlled by two files: `vendor-layout.json`, which controls how the elements of the chart are postioned, and `vendor-style.css`, which defines the colours, fonts, and other stylistic elements. You should probably fork this repository and modify these files for the visual style your own news organisation.
 
 
+Contributing
+------------
+
+Uses the Apache 2.0 licence. Pull requests very welcome.
+
+
 Future plans
 ------------
 
