@@ -20,7 +20,6 @@ nav {
     float: left;
     background: #556975;
     margin: 15px;
-    border: 2px solid #2b373d;
     padding-bottom: 10px;
     overflow: scroll;
     color: white;
@@ -29,9 +28,9 @@ nav {
 
 h1 {
     margin: 0;
-    padding: 10px;
+    padding: 10px 10px 8px 10px;
     background: #2b373d;
-    font-size: 16px;
+    font-size: 20px;
     color: white;
     text-align: center;
 }
@@ -71,9 +70,11 @@ p {
 button {
     display: inline-block;
     width: calc(50% - 15px);
-    height: 70px;
+    height: 60px;
     padding: 0;
+    color: white;
     font: inherit;
+    font-weight: bold;
 }
 
 button span {
@@ -82,24 +83,20 @@ button span {
 
 button.png {
     margin: 4px 5px 0 10px;
-    background: #8cc63e;
-    border: 2px solid #364d18;
+    border: none;
+    background: #daa520;
 }
 
 button.png:active {
-    border: 2px solid #23320f;
-    background: #364d18;
-    color: #8cc63e;
+    background: #8a6814;
 }
 
 button.svg {
     margin: 4px 10px 0 5px;
+    border: none;
     background: #bf64a7;
-    border: 2px solid #613354;
 }
 
 button.svg:active {
-    border: 2px solid #2d1727;
-    background: #613354;
-    color: #bf64a7;
+    background: #8a4878;
 }
