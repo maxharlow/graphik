@@ -1,0 +1,52 @@
+@import url(http://fonts.googleapis.com/css?family=Asap:400,700);
+
+svg {
+    font-family: Asap, Times, serif;
+}
+
+svg #title {
+    fill: #0e1112;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+svg #subtitle {
+    fill: #777;
+    font-size: 16px;
+}
+
+
+svg #footline {
+    stroke: #0e1112;
+}
+
+svg #credit,
+svg #source {
+    fill: #0e1112;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+svg.bar #x-axis text,
+svg.bar #y-axis text {
+    fill: #0e1112;
+    font-size: 14px;
+}
+
+svg.bar #y-axis path {
+    stroke: #0e1112;
+}
+
+svg.bar #grid line {
+    stroke: #ddd;
+    stroke-dasharray: 2, 2;
+}
+
+svg.bar #series rect {
+    fill: #9c2d2b;
+}
+
+svg.bar #series text {
+    fill: #0e1112;
+    font-size: 14px;
+}

@@ -168,13 +168,31 @@ function GraphikChart(display, layout) {
         return chart
     }
 
+    function inlineStyles() { // todo fix subtitle and footer fonts in png output
+        var svg = document.querySelector('svg')
+        var svgElements = svg.querySelectorAll('*')
+        for (var i = 0; i < svgElements.length; i++) {
+            var styleList = window.getComputedStyle(svgElements[i])
+            var styleListDefaults = window.getComputedStyle(document.body.appendChild(document.createElement(svgElements[i].tagName)))
+            var style = ''
+            for (var j = 0; j < styleList.length; j++) {
+                var key = styleList[j]
+                var value = styleList.getPropertyValue(key)
+                if (styleListDefaults.getPropertyValue(key) !== value) style += key + ':' + value + ';'
+            }
+            svgElements[i].setAttribute('style', style)
+        }
+    }
+
     this.toSVG = function () {
+        inlineStyles()
         var svg = document.querySelector('svg')
         var svgSerialised = (new XMLSerializer()).serializeToString(svg)
         return 'data:image/svg+xml;base64,' + window.btoa(svgSerialised)
     }
 
     this.toPNG = function () {
+        inlineStyles()
         var scale = 2 // size up for retina crispness
         var canvas = document.createElement('canvas')
         var canvasContext = canvas.getContext('2d')
