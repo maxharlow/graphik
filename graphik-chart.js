@@ -168,7 +168,7 @@ function GraphikChart(display, layout) {
         return chart
     }
 
-    function inlineStyles() { // todo fix subtitle and footer fonts in png output
+    function inlineStyles() {
         var svg = document.querySelector('svg')
         var svgElements = svg.querySelectorAll('*')
         for (var i = 0; i < svgElements.length; i++) {

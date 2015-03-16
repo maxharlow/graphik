@@ -23,7 +23,6 @@ svg #credit,
 svg #source {
     fill: #0e1112;
     font-size: 10px;
-    text-transform: uppercase;
 }
 
 svg.bar #x-axis text,
