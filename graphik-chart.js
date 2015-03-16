@@ -127,7 +127,7 @@ function GraphikChart(display, layout) {
             .tickSize(layout.bar.tickSizeX, 0)
             .tickPadding(layout.bar.padding.tickX)
             .tickValues(tickValues)
-            .tickFormat(function (d) { return config.dataPrefix + d + config.dataSuffix })
+            .tickFormat(function (d) { return config.dataPrefix + d.toLocaleString() + config.dataSuffix })
 
         chart.append('g')
             .attr('id', 'x-axis')
@@ -163,7 +163,7 @@ function GraphikChart(display, layout) {
             .attr('x', function (d) { return xScale(d.value) + layout.bar.padding.label })
             .attr('y', yScale.rangeBand() / 2)
             .attr('dominant-baseline', 'central')
-            .text(function (d) { return config.dataPrefix + d.value + config.dataSuffix })
+            .text(function (d) { return config.dataPrefix + d.value.toLocaleString() + config.dataSuffix })
 
         return chart
     }
