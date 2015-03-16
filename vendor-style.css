@@ -12,9 +12,8 @@ svg #title {
 
 svg #subtitle {
     fill: #777;
-    font-size: 16px;
+    font-size: 15px;
 }
-
 
 svg #footline {
     stroke: #0e1112;
