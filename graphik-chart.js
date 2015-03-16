@@ -186,9 +186,10 @@ function GraphikChart(display, layout) {
 
     this.toSVG = function () {
         inlineStyles()
+        var prelude = '<?xml version="1.0"?>'
         var svg = document.querySelector('svg')
         var svgSerialised = (new XMLSerializer()).serializeToString(svg)
-        return URL.createObjectURL(new Blob([svgSerialised], { 'type': 'image/svg+xml' }))
+        return URL.createObjectURL(new Blob([prelude + svgSerialised], { 'type': 'image/svg+xml' }))
     }
 
     this.toPNG = function () {
