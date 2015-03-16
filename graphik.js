@@ -8,10 +8,10 @@ function Graphik() {
                 update(chart)
             })
             document.querySelector('button.png').addEventListener('click', function () {
-                save(chart.toPNG(), filename() + '.png')
+                save(chart.toPNG(), 'png')
             })
             document.querySelector('button.svg').addEventListener('click', function () {
-                save(chart.toSVG(), filename() + '.svg')
+                save(chart.toSVG(), 'svg')
             })
             document.querySelector('textarea').value = 'Country\tAmount\nUS\t5.6\nNetherlands\t20.4\nUK\t21.3\nBelgium\t81.3\nItaly\t120.6\nFrance\t148.2'
             document.querySelector('input[name=tickInterval]').value = '25'
@@ -45,18 +45,15 @@ function Graphik() {
                 value: row[1]
             }
         })
-        var headers = parsed.splice(0, 1)
+        var headers = parsed.splice(0, 1) // ignore these, for now
         return parsed
     }
 
-    function filename() {
-        return document.querySelector('input[name=title]').value.replace(/\s+/g, '-').replace(/[^A-Za-z0-9\-]/g, '').toLowerCase() || 'untitled'
-    }
-
-    function save(data, filename) {
+    function save(data, extension) {
+        var filename = document.querySelector('input[name=title]').value.replace(/\s+/g, '-').replace(/[^A-Za-z0-9\-]/g, '').toLowerCase() || 'untitled'
         var anchor = document.createElement('a')
         anchor.setAttribute('href', data)
-        anchor.setAttribute('download', filename)
+        anchor.setAttribute('download', filename + '.' + extension)
         document.body.appendChild(anchor)
         anchor.click()
         document.body.removeChild(anchor)

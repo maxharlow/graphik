@@ -178,7 +178,7 @@ function GraphikChart(display, layout) {
             for (var j = 0; j < styleList.length; j++) {
                 var key = styleList[j]
                 var value = styleList.getPropertyValue(key)
-                if (styleListDefaults.getPropertyValue(key) !== value) style += key + ':' + value + ';'
+                if (styleListDefaults.getPropertyValue(key) !== value && key.charAt(0) !== '-') style += key + ':' + value + ';'
             }
             svgElements[i].setAttribute('style', style)
         }
@@ -188,7 +188,7 @@ function GraphikChart(display, layout) {
         inlineStyles()
         var svg = document.querySelector('svg')
         var svgSerialised = (new XMLSerializer()).serializeToString(svg)
-        return 'data:image/svg+xml;base64,' + window.btoa(svgSerialised)
+        return URL.createObjectURL(new Blob([svgSerialised], { 'type': 'image/svg+xml' }))
     }
 
     this.toPNG = function () {
