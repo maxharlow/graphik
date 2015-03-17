@@ -14,7 +14,6 @@ function Graphik() {
                 save(chart.toSVG(), 'svg')
             })
             document.querySelector('textarea').value = 'Country\tAmount\nUS\t5.6\nNetherlands\t20.4\nUK\t21.3\nBelgium\t81.3\nItaly\t120.6\nFrance\t148.2'
-            document.querySelector('input[name=tickInterval]').value = '25'
             update(chart)
         })
     }

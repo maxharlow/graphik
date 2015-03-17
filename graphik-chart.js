@@ -88,9 +88,10 @@ function GraphikChart(display, layout) {
 
     function drawBar(svg, config, data, x, y) {
         var dataMax = Math.max.apply(Math, data.map(function (d) { return d.value }))
-        var tickNumber = Math.ceil(dataMax / config.tickInterval)
-        var tickMaximum = (tickNumber * config.tickInterval) + (config.tickInterval * 0.5)
-        var tickValues = d3.range(0, tickMaximum + 1, config.tickInterval)
+        var tickInterval = config.tickInterval || Math.ceil(dataMax / 4)
+        var tickNumber = Math.ceil(dataMax / tickInterval)
+        var tickMaximum = (tickNumber * tickInterval) + (tickInterval * 0.5)
+        var tickValues = d3.range(0, tickMaximum + 1, tickInterval)
 
 	svg.attr('class', 'bar')
 
