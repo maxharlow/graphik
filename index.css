@@ -52,18 +52,25 @@ textarea {
 
 label {
     display: block;
-    margin: 10px 0 14px 0;
+    margin: 10px 0;
+    padding: 2px 0;
 }
 
 input {
     float: right;
     width: 60%;
     margin: 0;
+    margin-top: -2px;
     border: none;
     padding: 2px 4px;
     background: #eee;
     color: #222;
     font: inherit;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #777;
 }
 
 p {
