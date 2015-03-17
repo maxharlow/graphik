@@ -86,17 +86,17 @@ button span {
 button.png {
     margin: 4px 5px 0 0;
     border: none;
-    background: #daa520;
+    background: #358c3d;
 }
 
 button.png:active {
-    background: #8a6814;
+    background: #296e2f;
 }
 
 button.svg {
     margin: 4px 0 0 5px;
     border: none;
-    background: #bf64a7;
+    background: #a85592;
 }
 
 button.svg:active {
