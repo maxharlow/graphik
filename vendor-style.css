@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Asap:400,700);
+@import url(http://fonts.googleapis.com/css?family=Asap:400,400italic,700,700italic);
 
 svg {
     font-family: Asap, Times, serif;
@@ -17,6 +17,12 @@ svg #subtitle {
 
 svg #footline {
     stroke: #0e1112;
+}
+
+svg #notes {
+    fill: #0e1112;
+    font-size: 14px;
+    font-style: italic;
 }
 
 svg #credit,

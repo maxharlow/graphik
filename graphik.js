@@ -27,6 +27,7 @@ function Graphik() {
             tickInterval: document.querySelector('input[name=tickInterval]').value,
             dataPrefix: document.querySelector('input[name=dataPrefix]').value,
             dataSuffix: document.querySelector('input[name=dataSuffix]').value,
+            notes: document.querySelector('input[name=notes]').value,
             source: document.querySelector('input[name=source]').value,
             credit: document.querySelector('input[name=credit]').value
         }

@@ -55,6 +55,11 @@ function GraphikChart(display, layout) {
             .attr('id', 'footer')
             .attr('transform', 'translate(' + x + ', ' + y + ')')
 
+        var notes = footer.append('text')
+            .attr('id', 'notes')
+            .attr('dy', '1em')
+            .text(config.notes)
+
         var credit = footer.append('text')
             .attr('id', 'credit')
             .attr('dy', '1em')
@@ -68,14 +73,14 @@ function GraphikChart(display, layout) {
         source.attr('x', layout.width - layout.padding.left - layout.padding.right - source.node().getBBox().width)
 
         if (config.credit !== '' || config.source !== '') {
-            credit.attr('y', layout.padding.interfoot)
-            source.attr('y', layout.padding.interfoot)
+            credit.attr('y', notes.node().getBBox().height + (config.notes === '' ? 0 : layout.padding.prefootline) + layout.padding.postfootline)
+            source.attr('y', notes.node().getBBox().height + (config.notes === '' ? 0 : layout.padding.prefootline) + layout.padding.postfootline)
             footer.append('line')
                 .attr('id', 'footline')
                 .attr('x1', 0)
                 .attr('x2', layout.width - layout.padding.left - layout.padding.right)
-                .attr('y1', footer.node().getBBox().top)
-                .attr('y2', footer.node().getBBox().top)
+                .attr('y1', notes.node().getBBox().height + (config.notes === '' ? 0 : layout.padding.prefootline))
+                .attr('y2', notes.node().getBBox().height + (config.notes === '' ? 0 : layout.padding.prefootline))
         }
 
         return footer
