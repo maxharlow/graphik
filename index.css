@@ -73,7 +73,7 @@ p {
 button {
     display: inline-block;
     width: calc(50% - 5px);
-    height: 60px;
+    height: 70px;
     padding: 0;
     color: #eee;
     font: inherit;
