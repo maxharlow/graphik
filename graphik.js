@@ -45,8 +45,11 @@ function Graphik() {
                 value: row[1]
             }
         })
-        var headers = parsed.splice(0, 1) // ignore these, for now
-        return parsed
+        var filtered = parsed.filter(function (row) {
+            return row.value !== undefined
+        })
+        var headers = filtered.splice(0, 1) // ignore these, for now
+        return filtered
     }
 
     function save(data, extension) {
