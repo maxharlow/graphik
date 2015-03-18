@@ -89,19 +89,20 @@ function GraphikChart(display, layout) {
     function drawBar(svg, config, data, x, y) {
         var dataMax = Math.max.apply(Math, data.map(function (d) { return d.value }))
         var tickInterval = config.tickInterval || Math.ceil(dataMax / 4)
-        var tickNumber = Math.ceil(dataMax / tickInterval)
-        var tickMaximum = (tickNumber * tickInterval) + (tickInterval * 0.5)
+        var tickNumber = Math.floor(dataMax / tickInterval)
+        var tickNumberPadded = dataMax - tickInterval * tickNumber < tickInterval * 0.2 ? tickNumber : tickNumber + 1
+        var tickMaximum = (tickNumberPadded * tickInterval) + (tickInterval * 0.5)
         var tickValues = d3.range(0, tickMaximum + 1, tickInterval)
 
-	svg.attr('class', 'bar')
+        svg.attr('class', 'bar')
 
         var chart = svg.append('g')
             .attr('id', 'chart')
             .attr('transform', 'translate(' + x + ', ' + y + ')')
 
         var seriesHeight = (layout.bar.height * data.length) // height of all the bars
-	    + ((layout.bar.height * layout.bar.padding.inner) * (data.length)) // height of the inner bar spacing
-	    + ((layout.bar.height * layout.bar.padding.outer) * 2) // height of the outer bar spacing
+            + ((layout.bar.height * layout.bar.padding.inner) * (data.length)) // height of the inner bar spacing
+            + ((layout.bar.height * layout.bar.padding.outer) * 2) // height of the outer bar spacing
 
         var yScale = d3.scale.ordinal()
             .domain(d3.range(data.length))
