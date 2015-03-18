@@ -10,10 +10,9 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
     var tickMaximum = (tickNumberPadded * tickInterval) + (tickInterval * 0.5)
     var tickValues = d3.range(0, tickMaximum + 1, tickInterval)
 
-    svg.attr('class', 'bar')
-
     var chart = svg.append('g')
         .attr('id', 'chart')
+        .attr('class', 'bar')
         .attr('transform', 'translate(' + x + ', ' + y + ')')
 
     var seriesHeight = (layout.bar.height * data.length) // height of all the bars

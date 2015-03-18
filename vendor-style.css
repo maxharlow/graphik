@@ -31,26 +31,26 @@ svg #source {
     font-size: 11px;
 }
 
-svg.bar #x-axis text,
-svg.bar #y-axis text {
+svg .bar #x-axis text,
+svg .bar #y-axis text {
     fill: #0e1112;
     font-size: 14px;
 }
 
-svg.bar #y-axis path {
+svg .bar #y-axis path {
     stroke: #0e1112;
 }
 
-svg.bar #grid line {
+svg .bar #grid line {
     stroke: #ddd;
     stroke-dasharray: 2, 2;
 }
 
-svg.bar #series rect {
+svg .bar #series rect {
     fill: #9c2d2b;
 }
 
-svg.bar #series text {
+svg .bar #series text {
     fill: #0e1112;
     font-size: 14px;
 }
