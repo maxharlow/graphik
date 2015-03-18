@@ -1,4 +1,4 @@
-function GraphikChartBar(svg, config, layout, data, x, y) {
+function GraphikBarChart(svg, config, layout, data, x, y) {
     var dataMax = Math.max.apply(Math, data.map(function (d) { return d.value }))
     var tickInterval = config.tickInterval || Math.ceil(dataMax / 4)
     var tickNumber = Math.floor(dataMax / tickInterval)

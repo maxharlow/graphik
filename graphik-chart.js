@@ -5,7 +5,7 @@ function GraphikChart(display, layout) {
         var svg = d3.select(display).append('svg')
 
         var header = drawHeader(svg, config, layout.padding.left, layout.padding.top)
-        var chart = new GraphikChartBar(svg, config, layout, data, layout.padding.left, layout.padding.top + header.node().getBBox().height + layout.padding.prechart)
+        var chart = new GraphikBarChart(svg, config, layout, data, layout.padding.left, layout.padding.top + header.node().getBBox().height + layout.padding.prechart)
         var footer = drawFooter(svg, config, layout.padding.left, layout.padding.top + header.node().getBBox().height + layout.padding.prechart + chart.node().getBBox().height + layout.padding.postchart)
 
         var height = layout.padding.top
