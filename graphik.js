@@ -13,7 +13,7 @@ function Graphik() {
             document.querySelector('button.svg').addEventListener('click', function () {
                 save(chart.toSVG(), 'svg')
             })
-            document.querySelector('textarea').value = 'Country\tAmount\nUS\t5.6\nNetherlands\t20.4\nUK\t21.3\nBelgium\t81.3\nItaly\t120.6\nFrance\t148.2'
+            document.querySelector('textarea').value = 'Country\tAmount\tAmount2\nUS\t5.6\t5.6\nNetherlands\t20.4\t20.4\nUK\t21.3\t21.3\nBelgium\t81.3\t81.3\nItaly\t120.6\t120.6\nFrance\t148.2\t148.2'
             update(chart)
         })
     }
@@ -39,17 +39,19 @@ function Graphik() {
                 return isNaN(value) ? value : Number(value)
             })
         })
-        var parsed = data.map(function (row) {
-            return {
-                label: row[0],
-                value: row[1]
-            }
+        var head = data.splice(0, 1) // ignore headers, for now
+        var body = data.map(function (row) {
+            var label = row.splice(0, 1)[0]
+            return row.map(function (value) {
+                return {
+                    label: label,
+                    value: value
+                }
+            })
         })
-        var filtered = parsed.filter(function (row) {
-            return row.value !== undefined
+        return body.filter(function (row) {
+            return row.length > 0
         })
-        var headers = filtered.splice(0, 1) // ignore these, for now
-        return filtered
     }
 
     function save(data, extension) {

@@ -1,5 +1,15 @@
 function GraphikBarChart(svg, config, layout, data, x, y) {
-    var dataMax = Math.max.apply(Math, data.map(function (d) { return d.value }))
+
+    var dataMax = Math.max.apply(Math, data.map(function (row) {
+        return Math.max.apply(Math, row.map(function (col) {
+            return col.value
+        }))
+    }))
+
+    var dataGroups = Math.max.apply(Math, data.map(function (row) {
+        return row.length
+    }))
+
     var tickInterval = config.tickInterval || Math.ceil(dataMax / 4)
     var tickNumber = Math.floor(dataMax / tickInterval)
     if (tickNumber > 50) { // too many ticks, ignore
@@ -12,16 +22,16 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
 
     var chart = svg.append('g')
         .attr('id', 'chart')
-        .attr('class', 'bar')
+        .attr('class', 'bar-chart')
         .attr('transform', 'translate(' + x + ', ' + y + ')')
 
-    var seriesHeight = (layout.bar.height * data.length) // height of all the bars
-        + ((layout.bar.height * layout.bar.padding.inner) * (data.length)) // height of the inner bar spacing
-        + ((layout.bar.height * layout.bar.padding.outer) * 2) // height of the outer bar spacing
+    var seriesHeight = (layout.bar.height * dataGroups * data.length) // height of all the bars
+        + (layout.bar.height * layout.bar.padding.inner * data.length) // height of the inner bar spacing
+        + (layout.bar.height * layout.bar.padding.outer * 2) // height of the outer bar spacing
 
     var yScale = d3.scale.ordinal()
         .domain(d3.range(data.length))
-        .rangeBands([0, seriesHeight], layout.bar.padding.inner, layout.bar.padding.outer)
+        .rangeBands([0, seriesHeight], layout.bar.padding.inner / dataGroups, layout.bar.padding.outer)
 
     var yAxis = d3.svg.axis()
         .orient('left')
@@ -29,13 +39,17 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
         .tickSize(layout.bar.tickSizeY, 0)
         .tickPadding(layout.bar.padding.tickY)
         .tickValues(d3.range(data.length))
-        .tickFormat(function (d) { return data[d].label })
+        .tickFormat(function (d) { return data[d][0].label })
 
     var yAxisElement = chart.append('g')
         .attr('id', 'y-axis')
         .call(yAxis)
 
     yAxisElement.attr('transform', 'translate(' + yAxisElement.node().getBBox().width + ', ' + 0 + ')')
+
+    var yScaleGroup = d3.scale.ordinal()
+        .domain(d3.range(dataGroups))
+        .rangeRoundBands([0, yScale.rangeBand()])
 
     var seriesWidth = layout.width - layout.padding.left - yAxisElement.node().getBBox().width - layout.bar.padding.axisY - layout.padding.right
 
@@ -77,15 +91,23 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
         .append('g')
         .attr('transform', function (_, i) { return 'translate(' + 0 + ',' + yScale(i) + ')' })
 
-    bars.append('rect')
-        .attr('width', function (d) { return xScale(d.value) })
-        .attr('height', yScale.rangeBand())
+    var bar = bars.selectAll('g')
+        .data(function (d) { return d })
+        .enter()
+        .append('g')
+        .attr('transform', function (_, i) { return 'translate(' + 0 + ',' + yScaleGroup(i) + ')' })
+        .attr('class', function (_, i) { return 'bar' + i })
 
-    bars.append('text')
+    bar.append('rect')
+        .attr('width', function (d) { return xScale(d.value) })
+        .attr('height', yScaleGroup.rangeBand())
+
+    bar.append('text')
         .attr('x', function (d) { return xScale(d.value) + layout.bar.padding.label })
-        .attr('y', yScale.rangeBand() / 2)
+        .attr('y', yScaleGroup.rangeBand() / 2)
         .attr('dominant-baseline', 'central')
         .text(function (d) { return config.dataPrefix + d.value.toLocaleString() + config.dataSuffix })
 
     return chart
+
 }

@@ -24,7 +24,6 @@ Future plans
 ------------
 
 * Support negative values in bar charts
-* Support grouped and stacked bar charts
 * Support line charts
 * Save previously created charts in local storage
 * Expert-mode for adding arbitrary Javascript
