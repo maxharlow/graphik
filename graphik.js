@@ -13,7 +13,7 @@ function Graphik() {
             document.querySelector('button.svg').addEventListener('click', function () {
                 save(chart.toSVG(), 'svg')
             })
-            document.querySelector('textarea').value = 'Country\tAmount\tAmount2\nUS\t5.6\t5.6\nNetherlands\t20.4\t20.4\nUK\t21.3\t21.3\nBelgium\t81.3\t81.3\nItaly\t120.6\t120.6\nFrance\t148.2\t148.2'
+            document.querySelector('textarea').value = '\tAmount\nUS\t5.6\nSpain\t20.4\nUK\t21.3\nBelgium\t81.3\nItaly\t120.6\nFrance\t148.2'
             update(chart)
         })
     }
