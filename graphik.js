@@ -33,25 +33,32 @@ function Graphik() {
         chart.draw(data, config)
     }
 
-    function parse(value) {
-        var data = value.split('\n').map(function (row) {
-            return row.split('\t').map(function (value) {
+    function parse(input) {
+        var data = input.split('\n').map(function (row) {
+            return row.split('\t')
+        })
+        var columns = data.splice(0, 1)[0]
+        var key = columns.splice(0, 1)[0]
+        var rows = data.map(function (row) {
+            return row.splice(0, 1)[0]
+        })
+        var rowsFiltered = rows.filter(function (value) {
+            return value !== ''
+        })
+        var values = data.map(function (row) {
+            return row.map(function (value) {
                 return isNaN(value) ? value : Number(value)
             })
         })
-        var head = data.splice(0, 1) // ignore headers, for now
-        var body = data.map(function (row) {
-            var label = row.splice(0, 1)[0]
-            return row.map(function (value) {
-                return {
-                    label: label,
-                    value: value
-                }
-            })
-        })
-        return body.filter(function (row) {
+        var valuesFiltered = values.filter(function (row) {
             return row.length > 0
         })
+        return {
+            key: key,
+            columns: columns,
+            rows: rowsFiltered,
+            values: valuesFiltered
+        }
     }
 
     function save(data, extension) {

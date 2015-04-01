@@ -15,7 +15,10 @@
         "height": 30,
         "tickSizeX": 8,
         "tickSizeY": 0,
+        "drawXAxis": true,
         "padding": {
+            "postlegend": 15,
+            "interlegend": 10,
             "inner": 0.2,
             "outer": 0,
             "axisX": 0,

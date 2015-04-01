@@ -34,6 +34,10 @@ svg #source {
     font-size: 11px;
 }
 
+svg .bar-chart #legend {
+    font-size: 12px;
+}
+
 svg .bar-chart #x-axis text,
 svg .bar-chart #y-axis text {
     fill: #0e1112;
@@ -49,27 +53,32 @@ svg .bar-chart #grid line {
     stroke-dasharray: 2, 2;
 }
 
-svg .bar-chart #series .bar0 rect {
+svg .bar-chart #plot .bar0 rect,
+svg .bar-chart #legend .group0 circle {
     fill: #9c2d2b;
 }
 
-svg .bar-chart #series .bar1 rect {
+svg .bar-chart #plot .bar1 rect,
+svg .bar-chart #legend .group1 circle  {
     fill: #5A9092;
 }
 
-svg .bar-chart #series .bar2 rect {
+svg .bar-chart #plot .bar2 rect,
+svg .bar-chart #legend .group2 circle {
     fill: #227b28;
 }
 
-svg .bar-chart #series .bar3 rect {
+svg .bar-chart #plot .bar3 rect,
+svg .bar-chart #legend .group3 circle {
     fill: #9c5f2b;
 }
 
-svg .bar-chart #series .bar4 rect {
+svg .bar-chart #plot .bar4 rect,
+svg .bar-chart #legend .group4 circle {
     fill: #7e2355;
 }
 
-svg .bar-chart #series text {
+svg .bar-chart #plot text {
     fill: #0e1112;
     font-size: 14px;
 }

@@ -1,12 +1,10 @@
 function GraphikBarChart(svg, config, layout, data, x, y) {
 
-    var dataMax = Math.max.apply(Math, data.map(function (row) {
-        return Math.max.apply(Math, row.map(function (col) {
-            return col.value
-        }))
+    var dataMax = Math.max.apply(Math, data.values.map(function (row) {
+        return Math.max.apply(Math, row)
     }))
 
-    var dataGroups = Math.max.apply(Math, data.map(function (row) {
+    var dataGroups = Math.max.apply(Math, data.values.map(function (row) {
         return row.length
     }))
 
@@ -25,50 +23,81 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
         .attr('class', 'bar-chart')
         .attr('transform', 'translate(' + x + ', ' + y + ')')
 
-    var seriesHeight = (layout.bar.height * dataGroups * data.length) // height of all the bars
-        + (layout.bar.height * layout.bar.padding.inner * data.length) // height of the inner bar spacing
+    if (dataGroups > 1) { // draw legend, but only if we need one
+        var legend = chart.append('g')
+            .attr('id', 'legend')
+
+        var legendItems = legend.selectAll('g')
+            .data(data.columns)
+            .enter()
+            .append('g')
+            .attr('class', function (_, i) { return 'group' + i })
+
+        legendItems.append('circle')
+            .attr('cx', '1em')
+            .attr('cy', '0.6em')
+            .attr('r', '0.5em')
+            .attr('shape-rendering', 'auto')
+
+        legendItems.append('text')
+            .attr('x', '1em')
+            .attr('dx', '1em')
+            .attr('dy', '1em')
+            .text(function (d) { return d })
+
+        legendItems.attr('transform', function(_, i) {
+            return 'translate(' + [].reduce.call(legend.node().childNodes, function (a, node, index) { return index < i ? a + node.getBBox().width + layout.bar.padding.interlegend : a }, 0) + ', ' + 0 + ')'
+        })
+    }
+
+    var legendHeight = legend ? legend.node().getBBox().height + layout.bar.padding.postlegend : 0
+
+    var plotHeight = (layout.bar.height * dataGroups * data.values.length) // height of all the bars
+        + (layout.bar.height * layout.bar.padding.inner * data.values.length) // height of the inner bar spacing
         + (layout.bar.height * layout.bar.padding.outer * 2) // height of the outer bar spacing
 
     var yScale = d3.scale.ordinal()
-        .domain(d3.range(data.length))
-        .rangeBands([0, seriesHeight], layout.bar.padding.inner / dataGroups, layout.bar.padding.outer)
+        .domain(d3.range(data.rows.length))
+        .rangeBands([0, plotHeight], layout.bar.padding.inner / dataGroups, layout.bar.padding.outer)
 
     var yAxis = d3.svg.axis()
         .orient('left')
         .scale(yScale)
         .tickSize(layout.bar.tickSizeY, 0)
         .tickPadding(layout.bar.padding.tickY)
-        .tickValues(d3.range(data.length))
-        .tickFormat(function (d) { return data[d][0].label })
+        .tickValues(d3.range(data.values.length))
+        .tickFormat(function (d) { return data.rows[d] })
 
     var yAxisElement = chart.append('g')
         .attr('id', 'y-axis')
         .call(yAxis)
 
-    yAxisElement.attr('transform', 'translate(' + yAxisElement.node().getBBox().width + ', ' + 0 + ')')
+    yAxisElement.attr('transform', 'translate(' + yAxisElement.node().getBBox().width + ', ' + legendHeight + ')')
 
     var yScaleGroup = d3.scale.ordinal()
         .domain(d3.range(dataGroups))
         .rangeRoundBands([0, yScale.rangeBand()])
 
-    var seriesWidth = layout.width - layout.padding.left - yAxisElement.node().getBBox().width - layout.bar.padding.axisY - layout.padding.right
+    var plotWidth = layout.width - layout.padding.left - yAxisElement.node().getBBox().width - layout.bar.padding.axisY - layout.padding.right
 
     var xScale = d3.scale.linear()
         .domain([0, tickMaximum])
-        .range([0, seriesWidth])
+        .range([0, plotWidth])
 
-    var xAxis = d3.svg.axis()
-        .orient('bottom')
-        .scale(xScale)
-        .tickSize(layout.bar.tickSizeX, 0)
-        .tickPadding(layout.bar.padding.tickX)
-        .tickValues(tickValues)
-        .tickFormat(function (d) { return config.dataPrefix + d.toLocaleString() + config.dataSuffix })
+    if (layout.bar.drawXAxis) {
+	var xAxis = d3.svg.axis()
+            .orient('bottom')
+            .scale(xScale)
+            .tickSize(layout.bar.tickSizeX, 0)
+            .tickPadding(layout.bar.padding.tickX)
+            .tickValues(tickValues)
+            .tickFormat(function (d) { return config.dataPrefix + d.toLocaleString() + config.dataSuffix })
 
-    chart.append('g')
-        .attr('id', 'x-axis')
-        .attr('transform', 'translate(' + (yAxisElement.node().getBBox().width + layout.bar.padding.axisY) + ', ' + (seriesHeight + layout.bar.padding.axisX) + ')')
-        .call(xAxis)
+	chart.append('g')
+            .attr('id', 'x-axis')
+            .attr('transform', 'translate(' + (yAxisElement.node().getBBox().width + layout.bar.padding.axisY) + ', ' + (legendHeight + plotHeight + layout.bar.padding.axisX) + ')')
+            .call(xAxis)
+    }
 
     chart.append('g')
         .attr('id', 'grid')
@@ -77,16 +106,16 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
         .enter()
         .append('line')
         .attr('x1', function (d) { return yAxisElement.node().getBBox().width + xScale(d) })
-        .attr('y1', 0)
+        .attr('y1', legendHeight)
         .attr('x2', function (d) { return yAxisElement.node().getBBox().width + xScale(d) })
-        .attr('y2', seriesHeight)
+        .attr('y2', legendHeight + plotHeight)
 
-    var series = chart.append('g')
-        .attr('id', 'series')
-        .attr('transform', function (_, i) { return 'translate(' + (yAxisElement.node().getBBox().width + layout.bar.padding.axisY) + ',' + 0 + ')' })
+    var plot = chart.append('g')
+        .attr('id', 'plot')
+        .attr('transform', function (_, i) { return 'translate(' + (yAxisElement.node().getBBox().width + layout.bar.padding.axisY) + ',' + legendHeight + ')' })
 
-    var bars = series.selectAll('g')
-        .data(data)
+    var bars = plot.selectAll('g')
+        .data(data.values)
         .enter()
         .append('g')
         .attr('transform', function (_, i) { return 'translate(' + 0 + ',' + yScale(i) + ')' })
@@ -99,14 +128,14 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
         .attr('class', function (_, i) { return 'bar' + i })
 
     bar.append('rect')
-        .attr('width', function (d) { return xScale(d.value) })
+        .attr('width', function (d) { return xScale(d) })
         .attr('height', yScaleGroup.rangeBand())
 
     bar.append('text')
-        .attr('x', function (d) { return xScale(d.value) + layout.bar.padding.label })
+        .attr('x', function (d) { return xScale(d) + layout.bar.padding.label })
         .attr('y', yScaleGroup.rangeBand() / 2)
         .attr('dominant-baseline', 'central')
-        .text(function (d) { return config.dataPrefix + d.value.toLocaleString() + config.dataSuffix })
+        .text(function (d) { return config.dataPrefix + d.toLocaleString() + config.dataSuffix })
 
     return chart
 
