@@ -1,7 +1,9 @@
 Graphik
 =======
 
-Creates simple static charts.
+Make simple charts quickly.
+
+Graphik was built to let journalists rapidly build chart images with a predefined visual style, without needing special software or a team of graphic designers.
 
 
 Usage
@@ -9,15 +11,23 @@ Usage
 
 Try it here: [http://tbij.github.io/graphik] (http://tbij.github.io/graphik)
 
-Paste your data in, configure the title and other furniture, and export either a PNG or SVG file. That's it. An SVG can be imported into Illustrator for final touches if necessary.
+Paste your data in, configure the title and other furniture, and export either a PNG or SVG file. An SVG can then be imported into Illustrator for final touches if necessary.
 
-One of the reasons for creating Graphik rather than using [other similar tools] (#similar-tools) is that Graphik separates the visual style of the chart from the rest of the application. This means it is easy to customise the look of charts created by Graphik. By default, Graphik uses the house style of [the Bureau of Investigative Journalism] (http://www.thebureauinvestigates.com/). This is controlled by two files: `vendor-layout.json`, which controls how the elements of the chart are postioned, and `vendor-style.css`, which defines the colours, fonts, and other stylistic elements. You should probably fork this repository and modify these files for the visual style your own news organisation.
+
+Customising
+-----------
+
+Unlike [other chart-creating tools] (#similar-tools) Graphik makes it is easy to customise the style of charts it creates. By default, Graphik uses the house style of [the Bureau of Investigative Journalism] (http://www.thebureauinvestigates.com/), but you can easily customise it to your own.
+
+1. Fork this repository.
+2. In your forked version edit `vendor-style.css`, which defines the colours, fonts, and other stylistic elements, and `vendor-layout.json`, which controls how the different elements of the chart are postioned.
+3. You can now use your customised version at: `http://<YOUR-ACCOUNT-NAME>.github.io/graphik`.
 
 
 Contributing
 ------------
 
-Uses the Apache 2.0 licence. Pull requests very welcome.
+Graphik uses the Apache 2.0 licence. Pull requests are very welcome.
 
 
 Future plans
