@@ -7,6 +7,11 @@ function Graphik() {
             for (var i = 0; i < controls.length; i++) controls[i].addEventListener('input', function () {
                 update(chart)
             })
+            document.querySelector('.transpose').addEventListener('click', function () {
+                var textarea = document.querySelector('textarea')
+                textarea.value = transpose(textarea.value)
+                update(chart)
+            })
             document.querySelector('button.png').addEventListener('click', function () {
                 save(chart.toPNG(), 'png')
             })
@@ -59,6 +64,23 @@ function Graphik() {
             rows: rowsFiltered,
             values: valuesFiltered
         }
+    }
+
+    function transpose(input) {
+        var data = input.split('\n').map(function (row) {
+            return row.split('\t')
+        })
+        var newData = []
+        for (var i = 0; i < data[0].length; i++) {
+            var newRow = []
+            for (var j = 0; j < data.length; j++) {
+                newRow.push(data[j][i])
+            }
+            newData.push(newRow)
+        }
+        return newData.map(function (row) {
+            return row.join('\t')
+        }).join('\n')
     }
 
     function save(data, extension) {
