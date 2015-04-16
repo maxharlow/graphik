@@ -8,7 +8,7 @@ function GraphikChart(display, layout) {
         var chart = new GraphikBarChart(svg, config, layout, data, layout.padding.left, layout.padding.top + header.node().getBBox().height + layout.padding.prechart)
         var footer = drawFooter(svg, config, layout.padding.left, layout.padding.top + header.node().getBBox().height + layout.padding.prechart + chart.node().getBBox().height + layout.padding.postchart)
 
-	runCustom(svg, config)
+	runCustom(svg, config, data)
 
         var height = layout.padding.top
             + header.node().getBBox().height
@@ -88,10 +88,10 @@ function GraphikChart(display, layout) {
         return footer
     }
 
-    function runCustom(svg, config) {
+    function runCustom(svg, config, data) {
         try {
-            var custom = new Function(['d3', 'svg'], config.customScript)
-            custom(d3, svg)
+            var custom = new Function(['d3', 'svg', 'data'], config.customScript)
+            custom(d3, svg, data)
         }
         catch (e) {
             // ignore invalid code
