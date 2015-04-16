@@ -131,7 +131,7 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
         .attr('width', function (d) { return xScale(d) })
         .attr('height', yScaleGroup.rangeBand())
 
-    bar.append('text')
+    if (layout.bar.drawLabels) bar.append('text')
         .attr('x', function (d) { return xScale(d) + layout.bar.padding.label })
         .attr('y', yScaleGroup.rangeBand() / 2)
         .attr('dominant-baseline', 'central')
