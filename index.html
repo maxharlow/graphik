@@ -15,9 +15,9 @@
   <body>
     <nav>
       <h1>Graphik</h1>
-      <a class="transpose">Swap rows and columns</a>
+      <button class="transpose">Swap rows and columns</button>
       <p>Paste data from a spreadsheet here:</p>
-      <textarea></textarea>
+      <textarea name="input"></textarea>
       <label>Title<input name="title"></label>
       <label>Subtitle<input name="subtitle"></label>
       <hr/>
@@ -29,7 +29,14 @@
       <label>Notes<input name="notes"></label>
       <label>Source<input name="source"></label>
       <label>Credit<input name="credit"></label>
-      <button class="png">Create Raster Image<br/><span>(PNG)</span></button><button class="svg">Create Vector Image<br/><span>(SVG)</span></button>
+      <hr/>
+      <button class="showadvanced">Show advanced options</button>
+      <div class="advanced">
+        <p>Custom JavaScript:</p>
+        <textarea name="customScript"></textarea>
+      </div>
+      <hr/>
+      <button class="create png">Create Raster Image<br/><span>(PNG)</span></button><button class="create svg">Create Vector Image<br/><span>(SVG)</span></button>
     </nav>
     <div id="display"></div>
   </body>

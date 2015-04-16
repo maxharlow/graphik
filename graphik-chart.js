@@ -8,6 +8,8 @@ function GraphikChart(display, layout) {
         var chart = new GraphikBarChart(svg, config, layout, data, layout.padding.left, layout.padding.top + header.node().getBBox().height + layout.padding.prechart)
         var footer = drawFooter(svg, config, layout.padding.left, layout.padding.top + header.node().getBBox().height + layout.padding.prechart + chart.node().getBBox().height + layout.padding.postchart)
 
+	runCustom(svg, config)
+
         var height = layout.padding.top
             + header.node().getBBox().height
             + layout.padding.prechart
@@ -84,6 +86,16 @@ function GraphikChart(display, layout) {
         }
 
         return footer
+    }
+
+    function runCustom(svg, config) {
+        try {
+            var custom = new Function(['d3', 'svg'], config.customScript)
+            custom(d3, svg)
+        }
+        catch (e) {
+            // ignore invalid code
+        }
     }
 
     function inlineStyles() {

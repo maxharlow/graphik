@@ -8,7 +8,7 @@ function Graphik() {
                 update(chart)
             })
             document.querySelector('.transpose').addEventListener('click', function () {
-                var textarea = document.querySelector('textarea')
+                var textarea = document.querySelector('textarea[name=input]')
                 textarea.value = transpose(textarea.value)
                 update(chart)
             })
@@ -18,13 +18,24 @@ function Graphik() {
             document.querySelector('button.svg').addEventListener('click', function () {
                 save(chart.toSVG(), 'svg')
             })
-            document.querySelector('textarea').value = '\tAmount\nUS\t5.6\nSpain\t20.4\nUK\t21.3\nBelgium\t81.3\nItaly\t120.6\nFrance\t148.2'
+            document.querySelector('button.showadvanced').addEventListener('click', function () {
+                var advanced = document.querySelector('.advanced')
+                if (advanced.style.display === 'block') {
+                    advanced.style.display = 'none'
+                    this.innerHTML = this.innerHTML.replace('Hide', 'Show')
+                }
+                else {
+                    advanced.style.display = 'block'
+                    this.innerHTML = this.innerHTML.replace('Show', 'Hide')
+                }
+            })
+            document.querySelector('textarea[name=input]').value = '\tAmount\nUS\t5.6\nSpain\t20.4\nUK\t21.3\nBelgium\t81.3\nItaly\t120.6\nFrance\t148.2'
             update(chart)
         })
     }
 
     function update(chart) {
-        var data = parse(document.querySelector('textarea').value)
+        var data = parse(document.querySelector('textarea[name=input]').value)
         var config = {
             title: document.querySelector('input[name=title]').value,
             subtitle: document.querySelector('input[name=subtitle]').value,
@@ -33,7 +44,8 @@ function Graphik() {
             dataSuffix: document.querySelector('input[name=dataSuffix]').value,
             notes: document.querySelector('input[name=notes]').value,
             source: document.querySelector('input[name=source]').value,
-            credit: document.querySelector('input[name=credit]').value
+            credit: document.querySelector('input[name=credit]').value,
+            customScript: document.querySelector('textarea[name=customScript]').value
         }
         chart.draw(data, config)
     }

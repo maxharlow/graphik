@@ -39,7 +39,6 @@ textarea {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     width: 100%;
-    height: 250px;
     margin: 0;
     border: none;
     padding: 10px;
@@ -48,6 +47,14 @@ textarea {
     resize: vertical;
     font-family: Menlo, Monaco, Courier, monospace;
     font-size: inherit;
+}
+
+textarea[name="input"] {
+    height: 250px;
+}
+
+textarea[name="customScript"] {
+    height: 150px;
 }
 
 label {
@@ -77,22 +84,40 @@ p {
     margin: 10px 0;
 }
 
-nav > a {
-    float: right;
-    margin: 10px 0;
+.advanced {
+    display: none;
+}
+
+button {
     padding: 2px 10px;
     background: #777;
+    border: none;
     border-radius: 10px;
+    color: #eee;
     font-size: 10px;
     cursor: pointer;
 }
 
-button {
+button:active {
+    background: #444;
+}
+
+button.transpose {
+    float: right;
+    margin: 10px 0;
+}
+
+button.showadvanced {
+    display: block;
+    margin: 10px auto;
+}
+
+button.create {
     display: inline-block;
     width: calc(50% - 5px);
     height: 70px;
+    border-radius: 0;
     padding: 0;
-    color: #eee;
     font: inherit;
 }
 
@@ -100,22 +125,22 @@ button span {
     font-size: 0.8em;
 }
 
-button.png {
-    margin: 4px 5px 0 0;
+button.create.png {
+    margin-right: 4px;
     border: none;
     background: #358c3d;
 }
 
-button.png:active {
+button.create.png:active {
     background: #296e2f;
 }
 
-button.svg {
-    margin: 4px 0 0 5px;
+button.create.svg {
+    margin-left: 4px;
     border: none;
     background: #a85592;
 }
 
-button.svg:active {
+button.create.svg:active {
     background: #8a4878;
 }

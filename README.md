@@ -3,7 +3,7 @@ Graphik
 
 Make simple charts quickly.
 
-Graphik was built to let journalists rapidly build chart images with a predefined visual style, without needing special software or a team of graphic designers.
+Graphik was built to let journalists rapidly build chart images with a predefined visual style, without needing special software and a team of graphic designers.
 
 
 Usage
@@ -11,17 +11,17 @@ Usage
 
 Try it here: [http://tbij.github.io/graphik] (http://tbij.github.io/graphik)
 
-Paste your data in, configure the title and other furniture, and export either a PNG or SVG file. An SVG can then be imported into Illustrator for final touches if necessary.
+Paste your data in, configure the title and other furniture, and export either a PNG or SVG file. If necessary an SVG can then be imported into Adobe Illustrator for final touches.
 
 
 Customising
 -----------
 
-Unlike [other chart-creating tools] (#similar-tools) Graphik makes it is easy to customise the style of charts it creates. By default, Graphik uses the house style of [the Bureau of Investigative Journalism] (http://www.thebureauinvestigates.com/), but you can easily customise it to your own.
+Unlike [other chart-creating tools] (#similar-tools) Graphik makes it is easy to customise the style of the charts it creates. By default, Graphik uses the house style of [the Bureau of Investigative Journalism] (http://www.thebureauinvestigates.com/), but you can easily customise it to your own.
 
 1. Fork this repository.
 2. In your forked version edit `vendor-style.css`, which defines the colours, fonts, and other stylistic elements, and `vendor-layout.json`, which controls how the different elements of the chart are postioned.
-3. You can now use your customised version at: `http://<YOUR-ACCOUNT-NAME>.github.io/graphik`.
+3. You can now use your customised version at: `http://<YOUR-ACCOUNT>.github.io/graphik`.
 
 
 Contributing
@@ -36,7 +36,6 @@ Future plans
 * Support negative values in bar charts
 * Support line charts
 * Save previously created charts in local storage
-* Expert-mode for adding arbitrary Javascript
 * Free-text annotations
 
 
