@@ -33,7 +33,6 @@ Graphik uses the Apache 2.0 licence. Pull requests are very welcome.
 Future plans
 ------------
 
-* Support negative values in bar charts
 * Support line charts
 * Save previously created charts in local storage
 * Free-text annotations

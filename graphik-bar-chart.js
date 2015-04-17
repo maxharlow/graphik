@@ -1,22 +1,28 @@
 function GraphikBarChart(svg, config, layout, data, x, y) {
 
-    var dataMax = Math.max.apply(Math, data.values.map(function (row) {
-        return Math.max.apply(Math, row)
-    }))
-
     var dataGroups = Math.max.apply(Math, data.values.map(function (row) {
         return row.length
     }))
+    var dataMax = Math.max.apply(Math, data.values.map(function (row) {
+        return Math.max.apply(Math, row)
+    }))
+    var dataMin = Math.min.apply(Math, data.values.map(function (row) {
+        return Math.min.apply(Math, row)
+    }))
 
-    var tickInterval = config.tickInterval || Math.ceil(dataMax / 4)
-    var tickNumber = Math.floor(dataMax / tickInterval)
-    if (tickNumber > 50) { // too many ticks, ignore
-        tickInterval = Math.ceil(dataMax / 4)
-        tickNumber = Math.floor(dataMax / tickInterval)
+    var tickInterval = Number(config.tickInterval) || Math.ceil(dataMax > Math.abs(dataMin) ? dataMax / 4 : Math.abs(dataMin) / 4)
+    var tickNumberPositive = Math.floor(dataMax / tickInterval)
+    var tickNumberNegative = Math.abs(Math.ceil(dataMin / tickInterval))
+    if (tickNumberPositive > 10 || tickNumberNegative > 10) { // too many ticks, ignore
+        tickInterval = Math.ceil(dataMax > Math.abs(dataMin) ? dataMax / 4 : Math.abs(dataMin) / 4)
+        tickNumberPositive = Math.floor(dataMax / tickInterval)
+        tickNumberNegative = Math.abs(Math.ceil(dataMin / tickInterval))
     }
-    var tickNumberPadded = dataMax - tickInterval * tickNumber < tickInterval * 0.1 ? tickNumber : tickNumber + 1
-    var tickMaximum = (tickNumberPadded * tickInterval) + (tickInterval * 0.5)
-    var tickValues = d3.range(0, tickMaximum + 1, tickInterval)
+    var tickNumberPositivePad = dataMax - (tickInterval * tickNumberPositive) < (tickInterval * 0.1) ? tickNumberPositive : tickNumberPositive + 1
+    var tickNumberNegativePad = Math.abs(dataMin) - (tickInterval * tickNumberNegative) < (tickInterval * 0.1) ? tickNumberNegative : tickNumberNegative + 1
+    var tickMaximum = dataMax <= 0 ? +(tickInterval * 0.5) : (tickNumberPositivePad * tickInterval) + (tickInterval * 0.5)
+    var tickMinimum = dataMin >= 0 ? 0 : -(tickNumberNegativePad * tickInterval) - (tickInterval * 0.5)
+    var tickValues = d3.range(0, tickMinimum, -tickInterval).concat(d3.range(0, tickMaximum, tickInterval)).filter(function (e) { return e !== 0 }).concat([0])
 
     var chart = svg.append('g')
         .attr('id', 'chart')
@@ -81,11 +87,11 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
     var plotWidth = layout.width - layout.padding.left - yAxisElement.node().getBBox().width - layout.bar.padding.axisY - layout.padding.right
 
     var xScale = d3.scale.linear()
-        .domain([0, tickMaximum])
+        .domain([tickMinimum, tickMaximum])
         .range([0, plotWidth])
 
     if (layout.bar.drawXAxis) {
-	var xAxis = d3.svg.axis()
+        var xAxis = d3.svg.axis()
             .orient('bottom')
             .scale(xScale)
             .tickSize(layout.bar.tickSizeX, 0)
@@ -93,7 +99,7 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
             .tickValues(tickValues)
             .tickFormat(function (d) { return config.dataPrefix + d.toLocaleString() + config.dataSuffix })
 
-	chart.append('g')
+        chart.append('g')
             .attr('id', 'x-axis')
             .attr('transform', 'translate(' + (yAxisElement.node().getBBox().width + layout.bar.padding.axisY) + ', ' + (legendHeight + plotHeight + layout.bar.padding.axisX) + ')')
             .call(xAxis)
@@ -101,13 +107,14 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
 
     chart.append('g')
         .attr('id', 'grid')
+        .attr('transform', 'translate(' + yAxisElement.node().getBBox().width + ', ' + 0 + ')')
         .selectAll('line')
-        .data(tickValues.slice(1, tickValues.length))
+        .data(tickValues)
         .enter()
         .append('line')
-        .attr('x1', function (d) { return yAxisElement.node().getBBox().width + xScale(d) })
+        .attr('x1', function (d) { return xScale(d) })
         .attr('y1', legendHeight)
-        .attr('x2', function (d) { return yAxisElement.node().getBBox().width + xScale(d) })
+        .attr('x2', function (d) { return xScale(d) })
         .attr('y2', legendHeight + plotHeight)
 
     var plot = chart.append('g')
@@ -124,18 +131,24 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
         .data(function (d) { return d })
         .enter()
         .append('g')
-        .attr('transform', function (_, i) { return 'translate(' + 0 + ',' + yScaleGroup(i) + ')' })
+        .attr('transform', function (d, i) { return 'translate(' + xScale(Math.min(0, d)) + ',' + yScaleGroup(i) + ')' })
         .attr('class', function (_, i) { return 'bar' + i })
 
     bar.append('rect')
-        .attr('width', function (d) { return xScale(d) })
+        .attr('width', function (d) { return Math.abs(xScale(d) - xScale(0)) })
         .attr('height', yScaleGroup.rangeBand())
+        .attr('class', function (d) { return d < 0 ? 'bar negative' : 'bar positive' })
 
     if (layout.bar.drawLabels) bar.append('text')
-        .attr('x', function (d) { return xScale(d) + layout.bar.padding.label })
+        .attr('x', function (d) { return Math.abs(xScale(d) - xScale(0)) + layout.bar.padding.label })
         .attr('y', yScaleGroup.rangeBand() / 2)
         .attr('dominant-baseline', 'central')
         .text(function (d) { return config.dataPrefix + d.toLocaleString() + config.dataSuffix })
+
+    var zeroline = chart.append('g')
+        .attr('id', 'zeroline')
+        .attr('transform', 'translate(' + (yAxisElement.node().getBBox().width + xScale(0)) + ', ' + legendHeight + ')')
+        .call(yAxis.tickFormat('').tickSize(0))
 
     return chart
 

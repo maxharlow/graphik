@@ -44,10 +44,6 @@ svg .bar-chart #y-axis text {
     font-size: 14px;
 }
 
-svg .bar-chart #y-axis path {
-    stroke: #0e1112;
-}
-
 svg .bar-chart #grid line {
     stroke: #ddd;
     stroke-dasharray: 2, 2;
@@ -81,4 +77,8 @@ svg .bar-chart #legend .group4 circle {
 svg .bar-chart #plot text {
     fill: #0e1112;
     font-size: 14px;
+}
+
+svg .bar-chart #zeroline {
+    stroke: #0e1112;
 }
