@@ -50,38 +50,37 @@ function Graphik() {
         chart.draw(data, config)
     }
 
-    function parse(input) {
+    function extract(input) {
         var data = input.split('\n').map(function (row) {
             return row.split('\t')
         })
+        return data.filter(function (row) {
+            return row.filter(function (value) { return value !== '' }).length > 0
+        })
+    }
+
+    function parse(input) {
+        var data = extract(input)
         var columns = data.splice(0, 1)[0]
         var key = columns.splice(0, 1)[0]
         var rows = data.map(function (row) {
             return row.splice(0, 1)[0]
-        })
-        var rowsFiltered = rows.filter(function (value) {
-            return value !== ''
         })
         var values = data.map(function (row) {
             return row.map(function (value) {
                 return isNaN(value) ? value : Number(value)
             })
         })
-        var valuesFiltered = values.filter(function (row) {
-            return row.length > 0
-        })
         return {
             key: key,
             columns: columns,
-            rows: rowsFiltered,
-            values: valuesFiltered
+            rows: rows,
+            values: values
         }
     }
 
     function transpose(input) {
-        var data = input.split('\n').map(function (row) {
-            return row.split('\t')
-        })
+        var data = extract(input)
         var newData = []
         for (var i = 0; i < data[0].length; i++) {
             var newRow = []
@@ -90,9 +89,7 @@ function Graphik() {
             }
             newData.push(newRow)
         }
-        return newData.map(function (row) {
-            return row.join('\t')
-        }).join('\n')
+        return newData.map(function (row) { return row.join('\t') }).join('\n')
     }
 
     function save(data, extension) {
