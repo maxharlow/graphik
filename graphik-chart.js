@@ -8,7 +8,7 @@ function GraphikChart(display, layout) {
         var chart = new GraphikBarChart(svg, config, layout, data, layout.padding.left, layout.padding.top + header.node().getBBox().height + layout.padding.prechart)
         var footer = drawFooter(svg, config, layout.padding.left, layout.padding.top + header.node().getBBox().height + layout.padding.prechart + chart.node().getBBox().height + layout.padding.postchart)
 
-	runCustom(svg, config, data)
+        runCustom(svg, config, data)
 
         var height = layout.padding.top
             + header.node().getBBox().height
@@ -39,12 +39,14 @@ function GraphikChart(display, layout) {
             .attr('id', 'title')
             .attr('dy', '1em')
             .text(config.title)
+            .call(wrap, layout.width - layout.padding.left - layout.padding.right)
 
         if (config.subtitle !== '') {
             var subtitle = header.append('text')
                 .attr('id', 'subtitle')
                 .attr('dy', '1em')
                 .text(config.subtitle)
+                .call(wrap, layout.width - layout.padding.left - layout.padding.right)
 
             subtitle.attr('y', title.node().getBBox().height + layout.padding.intertitle)
         }
@@ -61,6 +63,7 @@ function GraphikChart(display, layout) {
             .attr('id', 'notes')
             .attr('dy', '1em')
             .text(config.notes)
+            .call(wrap, layout.width - layout.padding.left - layout.padding.right)
 
         var credit = footer.append('text')
             .attr('id', 'credit')
@@ -96,6 +99,30 @@ function GraphikChart(display, layout) {
         catch (e) {
             // ignore invalid code
         }
+    }
+
+    function wrap(input, width) {
+        var words = input.text().split(/\s+/)
+        input.text('')
+        words.reduce(function (lines, word, i) {
+            var line = lines[lines.length - 1]
+            if (line === undefined) {
+                var newLine = input.append('tspan')
+                newLine.text(word)
+                lines.push(newLine)
+            }
+            else if (line.node().getComputedTextLength() >= width) {
+                var lastWords = line.text().split(/\s+/)
+                var lastWord = lastWords.pop()
+                line.text(lastWords.join(' '))
+                var newLine = input.append('tspan')
+                newLine.text(lastWord + ' ' + word)
+                newLine.attr('x', 0).attr('dy', 1.1 + 'em')
+                lines.push(newLine)
+            }
+            else line.text(line.text() + ' ' + word)
+            return lines
+        }, [])
     }
 
     function inlineStyles() {
