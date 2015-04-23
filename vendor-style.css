@@ -81,4 +81,5 @@ svg .bar-chart #plot text {
 
 svg .bar-chart #zeroline {
     stroke: #0e1112;
+    stroke-width: 1px;
 }
