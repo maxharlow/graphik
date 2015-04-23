@@ -111,6 +111,11 @@ function GraphikChart(display, layout) {
                 newLine.text(word)
                 lines.push(newLine)
             }
+            else if (word === '<br>') { // fake line breaks
+                var newLine = input.append('tspan')
+                newLine.attr('x', 0).attr('dy', 1.1 + 'em')
+                lines.push(newLine)
+            }
             else if (line.node().getComputedTextLength() >= width) {
                 var lastWords = line.text().split(/\s+/)
                 var lastWord = lastWords.pop()
@@ -119,6 +124,9 @@ function GraphikChart(display, layout) {
                 newLine.text(lastWord + ' ' + word)
                 newLine.attr('x', 0).attr('dy', 1.1 + 'em')
                 lines.push(newLine)
+            }
+            else if (line.text() === '') {
+                line.text(word)
             }
             else line.text(line.text() + ' ' + word)
             return lines
