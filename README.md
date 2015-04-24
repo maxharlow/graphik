@@ -9,7 +9,7 @@ Graphik was built to let journalists rapidly build chart images with a predefine
 Usage
 -----
 
-Try it here: [http://tbij.github.io/graphik] (http://tbij.github.io/graphik)
+Try it here: [http://labs.thebureauinvestigates.com/graphik] (http://labs.thebureauinvestigates.com/graphik)
 
 Paste your data in, configure the title and other furniture, then export an image file. If necessary the image could then be imported into Adobe Illustrator for any final touches.
 
