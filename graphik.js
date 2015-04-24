@@ -68,7 +68,8 @@ function Graphik() {
         })
         var values = data.map(function (row) {
             return row.map(function (value) {
-                return isNaN(value) ? value : Number(value)
+                var valueNumerical = value.replace(/[^0-9\.\-]+/g, '')
+                return isNaN(valueNumerical) ? value : Number(valueNumerical)
             })
         })
         return {
