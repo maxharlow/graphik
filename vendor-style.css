@@ -56,22 +56,28 @@ svg .bar-chart #legend .group0 circle {
 
 svg .bar-chart #plot .bar1 rect,
 svg .bar-chart #legend .group1 circle  {
-    fill: #5A9092;
+    fill: #c87f7b;
 }
 
 svg .bar-chart #plot .bar2 rect,
 svg .bar-chart #legend .group2 circle {
-    fill: #227b28;
+    fill: #10839b;
+
 }
 
 svg .bar-chart #plot .bar3 rect,
 svg .bar-chart #legend .group3 circle {
-    fill: #9c5f2b;
+    fill: #a07800;
 }
 
 svg .bar-chart #plot .bar4 rect,
 svg .bar-chart #legend .group4 circle {
-    fill: #7e2355;
+    fill: #6b2a6c;
+}
+
+svg .bar-chart #plot .bar5 rect,
+svg .bar-chart #legend .group5 circle {
+    fill: #249b62;
 }
 
 svg .bar-chart #plot text {
