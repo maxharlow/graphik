@@ -104,7 +104,7 @@ function GraphikChart(display, layout) {
     function wrap(input, width) {
         var words = input.text().split(/\s+/)
         input.text('')
-        words.reduce(function (lines, word, i) {
+        words.reduce(function (lines, word) {
             var line = lines[lines.length - 1]
             if (line === undefined) {
                 var newLine = input.append('tspan')
