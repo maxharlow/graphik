@@ -101,36 +101,37 @@ function GraphikChart(display, layout) {
         }
     }
 
+    // disabled until CanVG <tspan> alignment bug is fixed: https://github.com/gabelerner/canvg/issues/347
     function wrap(input, width) {
-        var words = input.text().split(/\s+/)
-        input.text('')
-        words.reduce(function (lines, word) {
-            var line = lines[lines.length - 1]
-            if (line === undefined) {
-                var newLine = input.append('tspan')
-                newLine.text(word)
-                lines.push(newLine)
-            }
-            else if (word === '<br>') { // fake line breaks
-                var newLine = input.append('tspan')
-                newLine.attr('x', 0).attr('dy', 1.1 + 'em')
-                lines.push(newLine)
-            }
-            else if (line.node().getComputedTextLength() >= width) {
-                var lastWords = line.text().split(/\s+/)
-                var lastWord = lastWords.pop()
-                line.text(lastWords.join(' '))
-                var newLine = input.append('tspan')
-                newLine.text(lastWord + ' ' + word)
-                newLine.attr('x', 0).attr('dy', 1.1 + 'em')
-                lines.push(newLine)
-            }
-            else if (line.text() === '') {
-                line.text(word)
-            }
-            else line.text(line.text() + ' ' + word)
-            return lines
-        }, [])
+        // var words = input.text().split(/\s+/)
+        // input.text('')
+        // words.reduce(function (lines, word) {
+        //     var line = lines[lines.length - 1]
+        //     if (line === undefined) {
+        //         var newLine = input.append('tspan')
+        //         newLine.text(word)
+        //         lines.push(newLine)
+        //     }
+        //     else if (word === '<br>') { // fake line breaks
+        //         var newLine = input.append('tspan')
+        //         newLine.attr('x', 0).attr('dy', 1.1 + 'em')
+        //         lines.push(newLine)
+        //     }
+        //     else if (line.node().getComputedTextLength() >= width) {
+        //         var lastWords = line.text().split(/\s+/)
+        //         var lastWord = lastWords.pop()
+        //         line.text(lastWords.join(' '))
+        //         var newLine = input.append('tspan')
+        //         newLine.text(lastWord + ' ' + word)
+        //         newLine.attr('x', 0).attr('dy', 1.1 + 'em')
+        //         lines.push(newLine)
+        //     }
+        //     else if (line.text() === '') {
+        //         line.text(word)
+        //     }
+        //     else line.text(line.text() + ' ' + word)
+        //     return lines
+        // }, [])
     }
 
     function inlineStyles() {
