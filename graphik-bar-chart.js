@@ -13,7 +13,7 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
     var tickInterval = Number(config.tickInterval) || Math.ceil(dataMax > Math.abs(dataMin) ? dataMax / 4 : Math.abs(dataMin) / 4)
     var tickNumberPositive = Math.floor(dataMax / tickInterval)
     var tickNumberNegative = Math.abs(Math.ceil(dataMin / tickInterval))
-    if (tickNumberPositive > 10 || tickNumberNegative > 10 || (tickNumberPositive === 0 && tickNumberNegative === 0)) { // too many/few ticks, ignore
+    if (tickNumberPositive > 10 || tickNumberNegative > 10 || (tickNumberPositive < 2 && tickNumberNegative < 2)) { // too many/few ticks, ignore
         tickInterval = Math.ceil(dataMax > Math.abs(dataMin) ? dataMax / 4 : Math.abs(dataMin) / 4)
         tickNumberPositive = Math.floor(dataMax / tickInterval)
         tickNumberNegative = Math.abs(Math.ceil(dataMin / tickInterval))
