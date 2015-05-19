@@ -7,16 +7,19 @@ function Graphik() {
             for (var i = 0; i < controls.length; i++) controls[i].addEventListener('input', function () {
                 update(chart)
             })
+            setupOpenButton()
             document.querySelector('.transpose').addEventListener('click', function () {
                 var textarea = document.querySelector('textarea[name=input]')
-                textarea.value = transpose(textarea.value)
+                textarea.value = transposeData(textarea.value)
                 update(chart)
             })
             document.querySelector('button.png').addEventListener('click', function () {
-                save(chart.toPNG(), 'png')
+                save(getData(), getConfig())
+                download(chart.toPNG(), 'png')
             })
             document.querySelector('button.svg').addEventListener('click', function () {
-                save(chart.toSVG(), 'svg')
+                save(getData(), getConfig())
+                download(chart.toSVG(), 'svg')
             })
             document.querySelector('button.showadvanced').addEventListener('click', function () {
                 var advanced = document.querySelector('.advanced')
@@ -34,9 +37,70 @@ function Graphik() {
         })
     }
 
-    function update(chart) {
-        var data = parse(document.querySelector('textarea[name=input]').value)
-        var config = {
+    function setupOpenButton() {
+        document.addEventListener('click', function (e) {
+            var openButton = document.querySelector('.open')
+            var openList = document.querySelector('.open-list')
+            if (openList && e.target.className !== 'delete') {
+                openList.remove()
+                openButton.classList.remove('toggled')
+            }
+        })
+        document.querySelector('.open').addEventListener('click', function (e) {
+            if (document.querySelector('.open-list')) return
+            e.stopPropagation()
+            e.target.classList.add('toggled')
+            var openList = document.createElement('ol')
+            openList.className = 'open-list'
+            savedItems().forEach(function (saved) {
+                var savedItem = document.createElement('li')
+                savedItem.innerHTML = saved.config.title || '(untitled)'
+                var savedItemDate = document.createElement('span')
+                savedItemDate.innerHTML = new Date(saved.date).toLocaleString()
+                savedItem.appendChild(savedItemDate)
+                var savedItemDelete = document.createElement('div')
+                savedItemDelete.className = 'delete'
+                savedItemDelete.innerHTML = '✖'
+                savedItemDelete.addEventListener('click', function (e) {
+                    e.target.parentNode.remove()
+                    remove(saved.filename)
+                    if (savedItems().length === 0) {
+                        var emptyMessage = document.createElement('li')
+                        emptyMessage.className = 'empty-message'
+                        emptyMessage.innerHTML = 'No saved charts.'
+                        openList.appendChild(emptyMessage)
+                    }
+                })
+                savedItem.appendChild(savedItemDelete)
+                savedItem.addEventListener('click', function (e) {
+                    if (e.target.className === 'delete') return
+                    var savedChart = open(saved.filename)
+                    setData(savedChart.data)
+                    setConfig(savedChart.config)
+                    update(chart)
+                })
+                openList.appendChild(savedItem)
+            })
+            if (savedItems().length === 0) {
+                var emptyMessage = document.createElement('li')
+                emptyMessage.className = 'empty-message'
+                emptyMessage.innerHTML = 'No saved charts.'
+                openList.appendChild(emptyMessage)
+            }
+            this.parentNode.insertBefore(openList, this.nextSibling)
+        })
+    }
+
+    function getData() {
+        return document.querySelector('textarea[name=input]').value
+    }
+
+    function setData (data) {
+        document.querySelector('textarea[name=input]').value = data
+    }
+
+    function getConfig() {
+        return {
             title: document.querySelector('input[name=title]').value,
             subtitle: document.querySelector('input[name=subtitle]').value,
             tickInterval: document.querySelector('input[name=tickInterval]').value,
@@ -47,10 +111,25 @@ function Graphik() {
             credit: document.querySelector('input[name=credit]').value,
             customScript: document.querySelector('textarea[name=customScript]').value
         }
-        chart.draw(data, config)
     }
 
-    function extract(input) {
+    function setConfig(config) {
+        document.querySelector('input[name=title]').value = config.title
+        document.querySelector('input[name=subtitle]').value = config.subtitle
+        document.querySelector('input[name=tickInterval]').value = config.tickInterval
+        document.querySelector('input[name=dataPrefix]').value = config.dataPrefix
+        document.querySelector('input[name=dataSuffix]').value = config.dataSuffix
+        document.querySelector('input[name=notes]').value = config.notes
+        document.querySelector('input[name=source]').value = config.source
+        document.querySelector('input[name=credit]').value = config.credit
+        document.querySelector('textarea[name=customScript]').value = config.customScript
+    }
+
+    function update(chart) {
+        chart.draw(parseData(getData()), getConfig())
+    }
+
+    function extractData(input) {
         var data = input.split('\n').map(function (row) {
             return row.split('\t')
         })
@@ -59,8 +138,8 @@ function Graphik() {
         })
     }
 
-    function parse(input) {
-        var data = extract(input)
+    function parseData(input) {
+        var data = extractData(input)
         var columns = data.splice(0, 1)[0]
         var key = columns.splice(0, 1)[0]
         var rows = data.map(function (row) {
@@ -80,8 +159,8 @@ function Graphik() {
         }
     }
 
-    function transpose(input) {
-        var data = extract(input)
+    function transposeData(input) {
+        var data = extractData(input)
         var newData = []
         for (var i = 0; i < data[0].length; i++) {
             var newRow = []
@@ -93,14 +172,44 @@ function Graphik() {
         return newData.map(function (row) { return row.join('\t') }).join('\n')
     }
 
-    function save(data, extension) {
-        var filename = document.querySelector('input[name=title]').value.replace(/\s+/g, '-').replace(/[^A-Za-z0-9\-]/g, '').toLowerCase() || 'untitled'
+    function download(data, extension) {
         var anchor = document.createElement('a')
         anchor.setAttribute('href', data)
-        anchor.setAttribute('download', filename + '.' + extension)
+        anchor.setAttribute('download', filename() + '.' + extension)
         document.body.appendChild(anchor)
         anchor.click()
         document.body.removeChild(anchor)
+    }
+
+    function save(data, config) {
+        var item = {
+            filename: filename(),
+            date: new Date(),
+            data: data,
+            config: config
+        }
+        localStorage['saved'] = JSON.stringify(savedItems().concat(item))
+    }
+
+    function savedItems() {
+        return JSON.parse(localStorage['saved'] || '[]')
+    }
+
+    function open(filename) {
+        return savedItems().find(function (chart) {
+            return chart.filename === filename
+        })
+    }
+
+    function remove(filename) {
+        var items = savedItems().filter(function (chart) {
+            return chart.filename !== filename
+        })
+        localStorage['saved'] = JSON.stringify(items)
+    }
+
+    function filename() {
+        return document.querySelector('input[name=title]').value.replace(/\s+/g, '-').replace(/[^A-Za-z0-9\-]/g, '').toLowerCase() || 'untitled-' + new Date().getTime()
     }
 
     function request(uri, callback) {
