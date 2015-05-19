@@ -227,7 +227,7 @@ button.create.png:active {
 button.create.svg {
     margin-left: 4px;
     border: none;
-    background: #4f7136;
+    background: #49711e;
 }
 
 button.create.svg:active {
@@ -238,7 +238,7 @@ button.create.svg:active {
     nav {
         float: none;
         width: calc(100% - 20px);
-        max-height: auto;
+        max-height: inherit;
         max-width: 580px;
         border-radius: 0;
         margin: 0 auto;
