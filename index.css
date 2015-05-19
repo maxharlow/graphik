@@ -227,11 +227,11 @@ button.create.png:active {
 button.create.svg {
     margin-left: 4px;
     border: none;
-    background: #5f9749;
+    background: #4f7136;
 }
 
 button.create.svg:active {
-    background: #284221;
+    background: #314622;
 }
 
 @media (max-width: 1100px) {
