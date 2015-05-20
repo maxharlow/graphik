@@ -7,7 +7,7 @@ function Graphik() {
             for (var i = 0; i < controls.length; i++) controls[i].addEventListener('input', function () {
                 update(chart)
             })
-            setupOpenButton()
+            setupOpenButton(chart)
             document.querySelector('.transpose').addEventListener('click', function () {
                 var textarea = document.querySelector('textarea[name=input]')
                 textarea.value = transposeData(textarea.value)
@@ -37,7 +37,7 @@ function Graphik() {
         })
     }
 
-    function setupOpenButton() {
+    function setupOpenButton(chart) {
         document.addEventListener('click', function (e) {
             var openButton = document.querySelector('.open')
             var openList = document.querySelector('.open-list')
