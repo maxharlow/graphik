@@ -19,15 +19,15 @@ Usage
 
 Try it here: [http://labs.thebureauinvestigates.com/graphik] (http://labs.thebureauinvestigates.com/graphik)
 
-Paste your data in, configure the title and other furniture, then export an image file. If necessary the image could then be imported into Adobe Illustrator for any final touches.
+Paste your data in, configure the title and other furniture, then export an image file. If necessary the image can then be imported into Adobe Illustrator for any final touches.
 
 
 Customising
 -----------
 
-Unlike [other chart-creating tools] (#similar-tools) Graphik makes it is easy to customise the style of the charts it creates. By default, Graphik uses the house style of [the Bureau of Investigative Journalism] (http://www.thebureauinvestigates.com/), but you can easily customise it to your own. To do so:
+By default, Graphik uses the house style of [the Bureau of Investigative Journalism] (http://www.thebureauinvestigates.com/), but unlike [other chart-creating tools] (#similar-tools) but you can easily customise it to your own. To do so:
 
-1. Fork this repository.
+1. Fork this repository into your GitHub account using the Fork button above.
 2. In your forked version edit `vendor-style.css`, which defines the colours, fonts, and other stylistic elements, and `vendor-layout.json`, which controls how the different elements of the chart are postioned.
 3. You can now use your customised version at: `http://<YOUR-ACCOUNT>.github.io/graphik`.
 
@@ -35,7 +35,7 @@ Unlike [other chart-creating tools] (#similar-tools) Graphik makes it is easy to
 Contributing
 ------------
 
-Graphik uses the Apache 2.0 licence. Pull requests are very welcome.
+Graphik uses the Apache 2.0 licence. Pull requests very welcome.
 
 
 Similar tools
