@@ -125,32 +125,37 @@ p {
 }
 
 .open-list li {
-    position: relative;
-    height: 30px;
-    padding: 2px 5px;
+    height: 34px;
     cursor: pointer;
 }
 
-
-.open-list li:hover {
-    background: #3f3f3f;
+.open-list li .title {
+    display: inline-block;
+    width: calc(100% - 35px);
+    max-width: 350px;
+    padding: 2px 5px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
-.open-list li span {
+.open-list li:hover {
+    background: #282828;
+}
+
+.open-list li .date {
     display: block;
     font-size: 10px;
     font-style: italic;
 }
 
 .open-list li .delete {
-    position: absolute;
-    top: 0;
-    right: 0;
+    display: inline-block;
     width: 25px;
-    height: 34px;
+    height: 100%;
     color: #a10022;
     text-align: center;
     line-height: 34px;
+    vertical-align: top;
 }
 
 .open-list li .delete:hover {

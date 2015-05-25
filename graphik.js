@@ -54,10 +54,14 @@ function Graphik() {
             openList.className = 'open-list'
             savedItems().forEach(function (saved) {
                 var savedItem = document.createElement('li')
-                savedItem.innerHTML = saved.config.title || '(untitled)'
-                var savedItemDate = document.createElement('span')
-                savedItemDate.innerHTML = new Date(saved.date).toLocaleString()
-                savedItem.appendChild(savedItemDate)
+                var savedItemTitle = document.createElement('div')
+                savedItemTitle.className = 'title'
+                savedItemTitle.innerHTML = saved.config.title || '(untitled)'
+                var savedItemTitleDate = document.createElement('span')
+                savedItemTitleDate.className = 'date'
+                savedItemTitleDate.innerHTML = new Date(saved.date).toLocaleString()
+                savedItemTitle.appendChild(savedItemTitleDate)
+                savedItem.appendChild(savedItemTitle)
                 var savedItemDelete = document.createElement('div')
                 savedItemDelete.className = 'delete'
                 savedItemDelete.innerHTML = '&#10006;'
