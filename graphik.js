@@ -21,7 +21,7 @@ function Graphik() {
                 save(getData(), getConfig())
                 download(chart.toSVG(), 'svg')
             })
-            document.querySelector('button.showadvanced').addEventListener('click', function () {
+            document.querySelector('button.show-advanced').addEventListener('click', function () {
                 var advanced = document.querySelector('.advanced')
                 if (advanced.style.display === 'block') {
                     advanced.style.display = 'none'
