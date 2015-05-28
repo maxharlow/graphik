@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="vendor-style.css"/>
     <script src="https://cdn.rawgit.com/mbostock/d3/v3.5.5/d3.min.js"></script>
     <script src="https://cdn.rawgit.com/gabelerner/canvg/9577f1fc/canvg.js"></script>
+    <script src="graphik-line-chart.js"></script>
     <script src="graphik-bar-chart.js"></script>
     <script src="graphik-chart.js"></script>
     <script src="graphik.js"></script>
@@ -16,6 +17,7 @@
     <nav>
       <div class="open-menu"><button class="open">Open...</button></div>
       <h1>Graphik</h1>
+      <label class="type"><input type="radio" name="type" value="bar" checked="checked"/><span>Bar chart</span></label><label class="type"><input type="radio" name="type" value="line"/><span>Line chart</span></label>
       <button class="transpose">Swap rows and columns</button>
       <p>Paste data from a spreadsheet here:</p>
       <textarea name="input"></textarea>

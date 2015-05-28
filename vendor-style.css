@@ -34,50 +34,83 @@ svg #source {
     font-size: 11px;
 }
 
-svg .bar-chart #legend {
+svg #legend {
     font-size: 12px;
 }
 
-svg .bar-chart #x-axis text,
-svg .bar-chart #y-axis text {
+svg #x-axis text,
+svg #y-axis text {
     fill: #0e1112;
     font-size: 14px;
 }
 
-svg .bar-chart #grid line {
+svg .line-chart #x-axis .tick line {
+    stroke: #0e1112;
+    stroke-width: 2px;
+}
+
+svg #grid line {
     stroke: #ddd;
     stroke-dasharray: 2, 2;
 }
 
+svg .line-chart #plot path {
+    fill: none;
+    stroke-width: 2px;
+}
+
 svg .bar-chart #plot .bar0 rect,
-svg .bar-chart #legend .group0 circle {
+svg #legend .group0 circle {
     fill: #9c2d2b;
 }
 
+svg .line-chart #plot path.line0 {
+    stroke: #9c2d2b;
+}
+
 svg .bar-chart #plot .bar1 rect,
-svg .bar-chart #legend .group1 circle  {
+svg #legend .group1 circle  {
     fill: #c87f7b;
 }
 
-svg .bar-chart #plot .bar2 rect,
-svg .bar-chart #legend .group2 circle {
-    fill: #10839b;
+svg .line-chart #plot path.line1 {
+    stroke: #c87f7b;
+}
 
+svg .bar-chart #plot .bar2 rect,
+svg #legend .group2 circle {
+    fill: #10839b;
+}
+
+svg .line-chart #plot path.line2 {
+    stroke: #10839b;
 }
 
 svg .bar-chart #plot .bar3 rect,
-svg .bar-chart #legend .group3 circle {
+svg #legend .group3 circle {
     fill: #a07800;
 }
 
+svg .line-chart #plot path.line3 {
+    stroke: #a07800;
+}
+
 svg .bar-chart #plot .bar4 rect,
-svg .bar-chart #legend .group4 circle {
+svg #legend .group4 circle {
     fill: #6b2a6c;
 }
 
+svg .line-chart #plot path.line4 {
+    stroke: #6b2a6c;
+}
+
 svg .bar-chart #plot .bar5 rect,
-svg .bar-chart #legend .group5 circle {
+svg #legend .group5 circle {
     fill: #429b51;
+}
+
+svg .line-chart #plot path.line5 {
+    stroke: #429b51;
 }
 
 svg .bar-chart #plot text {
@@ -85,7 +118,7 @@ svg .bar-chart #plot text {
     font-size: 14px;
 }
 
-svg .bar-chart #zeroline {
+svg #zeroline {
     stroke: #0e1112;
     stroke-width: 2px;
 }

@@ -4,8 +4,10 @@ function GraphikChart(display, layout) {
         d3.select(display).select('svg').remove()
         var svg = d3.select(display).append('svg')
 
+	var graphikChart = config.type === 'line' ? GraphikLineChart : GraphikBarChart
+
         var header = drawHeader(svg, config, layout.padding.left, layout.padding.top)
-        var chart = new GraphikBarChart(svg, config, layout, data, layout.padding.left, layout.padding.top + header.node().getBBox().height + layout.padding.prechart)
+        var chart = new graphikChart(svg, config, layout, data, layout.padding.left, layout.padding.top + header.node().getBBox().height + layout.padding.prechart)
         var footer = drawFooter(svg, config, layout.padding.left, layout.padding.top + header.node().getBBox().height + layout.padding.prechart + chart.node().getBBox().height + layout.padding.postchart)
 
         runCustom(svg, config, data)

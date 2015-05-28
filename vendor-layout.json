@@ -28,5 +28,18 @@
             "tickY": 5,
             "label": 5
         }
+    },
+    "line": {
+        "plotHeight": 300,
+        "tickSizeX": 8,
+        "tickSizeY": 0,
+        "padding": {
+            "postlegend": 15,
+            "interlegend": 10,
+            "axisX": 0,
+            "axisY": 0,
+            "tickX": 15,
+            "tickY": 5
+        }
     }
 }

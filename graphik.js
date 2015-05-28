@@ -4,9 +4,12 @@ function Graphik() {
         request('vendor-layout.json', function (layout) {
             var chart = new GraphikChart('#display', layout)
             var controls = document.querySelectorAll('input,textarea')
-            for (var i = 0; i < controls.length; i++) controls[i].addEventListener('input', function () {
-                update(chart)
-            })
+            for (var i = 0; i < controls.length; i++) {
+		var event = controls[i].type === 'radio' ? 'change' : 'input'
+		controls[i].addEventListener(event, function () {
+                    update(chart)
+		})
+	    }
             setupOpenButton(chart)
             document.querySelector('.transpose').addEventListener('click', function () {
                 var textarea = document.querySelector('textarea[name=input]')
@@ -105,6 +108,7 @@ function Graphik() {
 
     function getConfig() {
         return {
+            type: document.querySelector('input[name=type]:checked').value,
             title: document.querySelector('input[name=title]').value,
             subtitle: document.querySelector('input[name=subtitle]').value,
             tickInterval: document.querySelector('input[name=tickInterval]').value,
@@ -118,6 +122,7 @@ function Graphik() {
     }
 
     function setConfig(config) {
+        document.querySelector('input[name=type][value=' + config.type + ']').checked = true
         document.querySelector('input[name=title]').value = config.title
         document.querySelector('input[name=subtitle]').value = config.subtitle
         document.querySelector('input[name=tickInterval]').value = config.tickInterval
