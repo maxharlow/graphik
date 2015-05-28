@@ -121,4 +121,5 @@ svg .bar-chart #plot text {
 svg #zeroline {
     stroke: #0e1112;
     stroke-width: 2px;
+    stroke-linecap: square;
 }
