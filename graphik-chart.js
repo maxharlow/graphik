@@ -103,7 +103,7 @@ function GraphikChart(display, layout) {
         }
     }
 
-    // disabled until CanVG <tspan> alignment bug is fixed: https://github.com/gabelerner/canvg/issues/347
+    // disabled until CanVG <tspan> alignment bug is fixed: https://github.com/gabelerner/canvg/issues/362
     function wrap(input, width) {
         // var words = input.text().split(/\s+/)
         // input.text('')
