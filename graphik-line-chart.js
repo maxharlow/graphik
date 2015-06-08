@@ -109,9 +109,9 @@ function GraphikLineChart(svg, config, layout, data, x, y) {
         .enter()
         .append('line')
         .attr('x1', 0)
-        .attr('y1', yScale)
+        .attr('y1', function (d) { return yScale(d) + legendHeight })
         .attr('x2', plotWidth)
-        .attr('y2', yScale)
+        .attr('y2', function (d) { return yScale(d) + legendHeight })
 
     var zeroline = chart.append('g')
         .attr('id', 'zeroline')
