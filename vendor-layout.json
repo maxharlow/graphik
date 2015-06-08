@@ -34,7 +34,7 @@
         "tickSizeX": 8,
         "tickSizeY": 0,
         "padding": {
-            "postlegend": 15,
+            "postlegend": 25,
             "interlegend": 10,
             "axisX": 0,
             "axisY": 0,
