@@ -17,6 +17,7 @@
         "tickSizeY": 0,
         "drawXAxis": true,
         "drawLabels": true,
+        "useInternalLabels": false,
         "padding": {
             "postlegend": 15,
             "interlegend": 10,

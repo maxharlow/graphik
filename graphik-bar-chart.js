@@ -121,29 +121,36 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
         .attr('id', 'plot')
         .attr('transform', function (_, i) { return 'translate(' + (yAxisElement.node().getBBox().width + layout.bar.padding.axisY) + ', ' + legendHeight + ')' })
 
-    var bars = plot.selectAll('g')
+    var barGroups = plot.selectAll('g')
         .data(data.values)
         .enter()
         .append('g')
         .attr('transform', function (_, i) { return 'translate(' + 0 + ', ' + yScale(i) + ')' })
 
-    var bar = bars.selectAll('g')
+    var bars = barGroups.selectAll('g')
         .data(function (d) { return d })
         .enter()
         .append('g')
         .attr('transform', function (d, i) { return 'translate(' + xScale(Math.min(0, d)) + ', ' + yScaleGroup(i) + ')' })
         .attr('class', function (_, i) { return 'bar' + i })
 
-    bar.append('rect')
+    bars.append('rect')
         .attr('width', function (d) { return Math.abs(xScale(d) - xScale(0)) })
         .attr('height', yScaleGroup.rangeBand())
         .attr('class', function (d) { return d < 0 ? 'bar negative' : 'bar positive' })
 
-    if (layout.bar.drawLabels) bar.append('text')
-        .attr('x', function (d) { return Math.abs(xScale(d) - xScale(0)) + layout.bar.padding.label })
+    if (layout.bar.drawLabels) bars.append('text')
         .attr('y', yScaleGroup.rangeBand() / 2)
         .attr('dominant-baseline', 'central')
         .text(function (d) { return config.dataPrefix + d.toLocaleString() + config.dataSuffix })
+        .attr('class', function (d, i, j) {
+            var useInternal = layout.bar.useInternalLabels && bars[j][i].getBBox().width > this.getBBox().width + layout.bar.padding.label * 2
+            return useInternal ? 'internal' : 'external'
+        })
+        .attr('x', function (d, i, j) {
+            var useInternal = layout.bar.useInternalLabels && bars[j][i].getBBox().width > this.getBBox().width + layout.bar.padding.label * 2
+            return useInternal ? Math.abs(xScale(d) - xScale(0)) - this.getBBox().width - layout.bar.padding.label : Math.abs(xScale(d) - xScale(0)) + layout.bar.padding.label
+        })
 
     var zeroline = chart.append('g')
         .attr('id', 'zeroline')
