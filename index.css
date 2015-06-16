@@ -187,6 +187,8 @@ p {
     width: 25px;
     height: 100%;
     color: #a10022;
+    font-size: 20px;
+    font-weight: bold;
     text-align: center;
     line-height: 34px;
     vertical-align: top;

@@ -67,7 +67,7 @@ function Graphik() {
                 savedItem.appendChild(savedItemTitle)
                 var savedItemDelete = document.createElement('div')
                 savedItemDelete.className = 'delete'
-                savedItemDelete.innerHTML = '&#x2716;'
+                savedItemDelete.innerHTML = '&#xd7;'
                 savedItemDelete.addEventListener('click', function (e) {
                     e.target.parentNode.remove()
                     remove(saved.id)
