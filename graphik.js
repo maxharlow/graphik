@@ -5,11 +5,11 @@ function Graphik() {
             var chart = new GraphikChart('#display', layout)
             var controls = document.querySelectorAll('input,textarea')
             for (var i = 0; i < controls.length; i++) {
-		var event = controls[i].type === 'radio' ? 'change' : 'input'
-		controls[i].addEventListener(event, function () {
+                var event = controls[i].type === 'radio' ? 'change' : 'input'
+                controls[i].addEventListener(event, function () {
                     update(chart)
-		})
-	    }
+                })
+            }
             setupOpenButton(chart)
             document.querySelector('.transpose').addEventListener('click', function () {
                 var textarea = document.querySelector('textarea[name=input]')
@@ -70,7 +70,7 @@ function Graphik() {
                 savedItemDelete.innerHTML = '&#10006;'
                 savedItemDelete.addEventListener('click', function (e) {
                     e.target.parentNode.remove()
-                    remove(saved.filename)
+                    remove(saved.id)
                     if (savedItems().length === 0) {
                         var emptyMessage = document.createElement('li')
                         emptyMessage.className = 'empty-message'
@@ -81,7 +81,7 @@ function Graphik() {
                 savedItem.appendChild(savedItemDelete)
                 savedItem.addEventListener('click', function (e) {
                     if (e.target.className === 'delete') return
-                    var savedChart = open(saved.filename)
+                    var savedChart = open(saved.id)
                     setData(savedChart.data)
                     setConfig(savedChart.config)
                     update(chart)
@@ -192,7 +192,7 @@ function Graphik() {
 
     function save(data, config) {
         var item = {
-            filename: filename(),
+            id: filename() + '-' + new Date().getTime(),
             date: new Date(),
             data: data,
             config: config
@@ -204,21 +204,21 @@ function Graphik() {
         return JSON.parse(localStorage['saved'] || '[]')
     }
 
-    function open(filename) {
+    function open(id) {
         return savedItems().find(function (chart) {
-            return chart.filename === filename
+            return chart.id === id
         })
     }
 
-    function remove(filename) {
+    function remove(id) {
         var items = savedItems().filter(function (chart) {
-            return chart.filename !== filename
+            return chart.id !== id
         })
         localStorage['saved'] = JSON.stringify(items)
     }
 
     function filename() {
-        return document.querySelector('input[name=title]').value.replace(/\s+/g, '-').replace(/[^A-Za-z0-9\-]/g, '').toLowerCase() || 'untitled-' + new Date().getTime()
+        return document.querySelector('input[name=title]').value.replace(/\s+/g, '-').replace(/[^A-Za-z0-9\-]/g, '').toLowerCase() || 'untitled'
     }
 
     function request(uri, callback) {
