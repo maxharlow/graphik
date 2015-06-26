@@ -205,9 +205,9 @@ function Graphik() {
     }
 
     function open(id) {
-        return savedItems().find(function (chart) {
+        return savedItems().filter(function (chart) {
             return chart.id === id
-        })
+        })[0]
     }
 
     function remove(id) {
