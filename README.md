@@ -6,18 +6,10 @@ Make simple charts quickly.
 Graphik was built to let journalists rapidly build chart images with a predefined visual style, without needing special software and a team of graphic designers.
 
 
-Examples
---------
-
-<a href="https://www.thebureauinvestigates.com/2015/03/17/labours-donor-who-is-martin-taylor-ed-miliband-transparency/"><img src="https://www.thebureauinvestigates.com/wp-content/uploads/2015/03/labours-top-25-cash-donors-list.png" width="600" height="1084"/></a>
-
-<a href="http://labs.thebureauinvestigates.com/a-lobbying-masterclass/#safety-checks"><img src="http://labs.thebureauinvestigates.com/a-lobbying-masterclass/media/trade-secrets-source-of-alleged-thefts.png" width="600" height="571"/></a>
-
-
 Usage
 -----
 
-Try it here: [http://labs.thebureauinvestigates.com/graphik] (http://labs.thebureauinvestigates.com/graphik)
+Try it here: [http://maxharlow.com/graphik] (http://maxharlow.com/graphik)
 
 Paste your data in, configure the title and other furniture, then export an image file. If necessary the image can then be imported into Adobe Illustrator for any final touches.
 
@@ -25,7 +17,7 @@ Paste your data in, configure the title and other furniture, then export an imag
 Customising
 -----------
 
-By default, Graphik uses the house style of [the Bureau of Investigative Journalism] (http://www.thebureauinvestigates.com/), but unlike [other chart-creating tools] (#similar-tools) but you can easily customise it to your own. To do so:
+By default, Graphik uses its own style, but unlike [other chart-creating tools] (#similar-tools) but you can easily customise it to your own. To do so:
 
 1. Fork this repository into your GitHub account using the Fork button above.
 2. In your forked version edit `vendor-style.css`, which defines the colours, fonts, and other stylistic elements, and `vendor-layout.json`, which controls how the different elements of the chart are postioned.
