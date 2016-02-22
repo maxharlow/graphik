@@ -1,10 +1,10 @@
 {
-    "width": 600,
+    "width": 500,
     "padding": {
-        "intertitle": 5,
-        "prechart": 20,
-        "postchart": 20,
-        "prefootline": 20,
+        "intertitle": -15,
+        "prechart": 10,
+        "postchart": 5,
+        "prefootline": 10,
         "postfootline": 5,
         "top": 10,
         "right": 10,
@@ -12,12 +12,12 @@
         "left": 10
     },
     "bar": {
-        "height": 30,
+        "height": 25,
         "tickSizeX": 8,
         "tickSizeY": 0,
         "drawXAxis": true,
         "drawLabels": true,
-        "useInternalLabels": false,
+        "useInternalLabels": true,
         "padding": {
             "postlegend": 15,
             "interlegend": 10,
