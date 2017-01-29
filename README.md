@@ -46,7 +46,10 @@ Graphik uses the Apache 2.0 licence. Pull requests very welcome.
 Similar tools
 -------------
 
-* [Datawrapper] (https://datawrapper.de/) by [Mirko Lorenz] (https://twitter.com/mirkolorenz), [Nicolas Kayser-Bril] (https://twitter.com/nicolaskb) and [Gregor Aisch] (https://twitter.com/driven_by_data)
-* [Chartbuilder] (http://quartz.github.io/Chartbuilder/) by [David Yanofsky] (https://twitter.com/YAN0) of [Quartz] (http://qz.com/)
-* [Mr. Chartmaker] (http://vis4.net/blog/posts/seven-features-youll-wantin-your-next-charting-tool/) by [Gregor Aisch] (https://twitter.com/driven_by_data) of the [New York Times] (http://www.nytimes.com/)
-* [Raw] (http://app.raw.densitydesign.org/) by [Density Design] (http://www.densitydesign.org/)
+* [Datawrapper] (https://datawrapper.de/chart/create)
+* [Chartbuilder] (http://quartz.github.io/Chartbuilder/)
+* [Mr. Chartmaker] (http://vis4.net/blog/posts/seven-features-youll-wantin-your-next-charting-tool/)
+* [Raw Graphs] (http://app.rawgraphs.io/)
+* [Chart Tool] (http://globeandmail.github.io/chart-tool/)
+* [Charted] (http://www.charted.co/)
+* [Playfair] (http://austinclemens.com/Playfair/playfair.html)
