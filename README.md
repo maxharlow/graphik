@@ -24,6 +24,19 @@ By default, Graphik uses its own style, but unlike [other chart-creating tools] 
 3. You can now use your customised version at: `http://<YOUR-ACCOUNT>.github.io/graphik`.
 
 
+Updating
+--------
+
+You can get the latest updates from this repository without overwriting your customisations. To do this you need to have:
+
+    $ git remote add upstream https://github.com/maxharlow/graphik.git
+
+Then when you want to update, run:
+
+    $ git pull -X ours upstream master
+    $ git push origin master
+
+
 Contributing
 ------------
 
