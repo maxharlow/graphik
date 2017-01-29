@@ -50,7 +50,7 @@ function GraphikChart(display, layout) {
                 .text(config.subtitle)
                 .call(wrap, layout.width - layout.padding.left - layout.padding.right)
 
-            subtitle.attr('y', title.node().getBBox().height + layout.padding.intertitle)
+            subtitle.attr('y', parseInt(title.style('font-size')) + layout.padding.intertitle)
         }
 
         return header
