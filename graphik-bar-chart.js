@@ -22,7 +22,9 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
     var tickNumberNegativePad = Math.abs(dataMin) - (tickInterval * tickNumberNegative) < (tickInterval * 0.1) ? tickNumberNegative : tickNumberNegative + 1
     var tickMaximum = dataMax <= 0 ? +(tickInterval * 0.5) : (tickNumberPositivePad * tickInterval) + (tickInterval * 0.5)
     var tickMinimum = dataMin >= 0 ? 0 : -(tickNumberNegativePad * tickInterval) - (tickInterval * 0.5)
-    var tickValues = d3.range(0, tickMinimum, -tickInterval).concat(d3.range(0, tickMaximum, tickInterval)).filter(function (e) { return e !== 0 }).concat([0])
+    var tickValues = d3.range(0, tickMinimum, -tickInterval).concat(d3.range(0, tickMaximum, tickInterval))
+
+    var gridValues = tickValues.filter(function (value) { return value !== 0 })
 
     var chart = svg.append('g')
         .attr('id', 'chart')
@@ -62,54 +64,66 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
         + (layout.bar.height * layout.bar.padding.inner * data.values.length) // height of the inner bar spacing
         + (layout.bar.height * layout.bar.padding.outer * 2) // height of the outer bar spacing
 
-    var yScale = d3.scale.ordinal()
+    var yScale = d3.scaleBand()
         .domain(d3.range(data.rows.length))
-        .rangeBands([0, plotHeight], layout.bar.padding.inner / dataGroups, layout.bar.padding.outer)
+        .range([0, plotHeight])
+        .paddingInner(data.rows.length === 1 ? 0 : layout.bar.padding.inner / dataGroups)
+        .paddingOuter(layout.bar.padding.outer)
 
-    var yAxis = d3.svg.axis()
-        .orient('left')
+    var yAxis = d3.axisLeft(d3.range(data.values.length))
         .scale(yScale)
         .tickSize(layout.bar.tickSizeY, 0)
         .tickPadding(layout.bar.padding.tickY)
-        .tickValues(d3.range(data.values.length))
         .tickFormat(function (d) { return data.rows[d] })
 
     var yAxisElement = chart.append('g')
         .attr('id', 'y-axis')
         .call(yAxis)
 
-    yAxisElement.attr('transform', 'translate(' + yAxisElement.node().getBBox().width + ', ' + legendHeight + ')')
+    yAxisElement
+        .attr('font-family', null)
+        .attr('font-size', null)
+        .attr('transform', 'translate(' + yAxisElement.node().getBBox().width + ', ' + legendHeight + ')')
 
-    var yScaleGroup = d3.scale.ordinal()
+    yAxisElement.selectAll('.tick')
+        .attr('opacity', null)
+
+    var yScaleGroup = d3.scaleBand()
         .domain(d3.range(dataGroups))
-        .rangeRoundBands([0, yScale.rangeBand()])
+        .range([0, yScale.bandwidth()])
 
     var plotWidth = layout.width - layout.padding.left - yAxisElement.node().getBBox().width - layout.bar.padding.axisY - layout.padding.right
 
-    var xScale = d3.scale.linear()
+    var xScale = d3.scaleLinear()
         .domain([tickMinimum, tickMaximum])
         .range([0, plotWidth])
 
     if (layout.bar.drawXAxis) {
-        var xAxis = d3.svg.axis()
-            .orient('bottom')
+        var xAxis = d3.axisBottom(xScale)
             .scale(xScale)
             .tickSize(layout.bar.tickSizeX, 0)
             .tickPadding(layout.bar.padding.tickX)
             .tickValues(tickValues)
             .tickFormat(function (d) { return config.dataPrefix + d.toLocaleString() + config.dataSuffix })
 
-        chart.append('g')
+        var xAxisElement = chart.append('g')
             .attr('id', 'x-axis')
             .attr('transform', 'translate(' + (yAxisElement.node().getBBox().width + layout.bar.padding.axisY) + ', ' + (legendHeight + plotHeight + layout.bar.padding.axisX) + ')')
             .call(xAxis)
+
+        xAxisElement
+            .attr('font-family', null)
+            .attr('font-size', null)
+
+        xAxisElement.selectAll('.tick')
+            .attr('opacity', null)
     }
 
     chart.append('g')
         .attr('id', 'grid')
         .attr('transform', 'translate(' + yAxisElement.node().getBBox().width + ', ' + 0 + ')')
         .selectAll('line')
-        .data(tickValues)
+        .data(gridValues)
         .enter()
         .append('line')
         .attr('x1', xScale)
@@ -136,26 +150,32 @@ function GraphikBarChart(svg, config, layout, data, x, y) {
 
     bars.append('rect')
         .attr('width', function (d) { return Math.abs(xScale(d) - xScale(0)) })
-        .attr('height', yScaleGroup.rangeBand())
+        .attr('height', yScaleGroup.bandwidth())
         .attr('class', function (d) { return d < 0 ? 'bar negative' : 'bar positive' })
 
     if (layout.bar.drawLabels) bars.append('text')
-        .attr('y', yScaleGroup.rangeBand() / 2)
+        .attr('y', yScaleGroup.bandwidth() / 2)
         .attr('dominant-baseline', 'central')
         .text(function (d) { return config.dataPrefix + d.toLocaleString() + config.dataSuffix })
-        .attr('class', function (d, i, j) {
-            var useInternal = layout.bar.useInternalLabels && bars[j][i].getBBox().width > this.getBBox().width + layout.bar.padding.label * 2
+        .attr('class', function (d) {
+            var bar = d3.select(this.parentNode).select('rect')
+            var useInternal = layout.bar.useInternalLabels && bar.node().getBBox().width > this.getBBox().width + layout.bar.padding.label * 2
             return useInternal ? 'internal' : 'external'
         })
-        .attr('x', function (d, i, j) {
-            var useInternal = layout.bar.useInternalLabels && bars[j][i].getBBox().width > this.getBBox().width + layout.bar.padding.label * 2
+        .attr('x', function (d) {
+            var bar = d3.select(this.parentNode).select('rect')
+            var useInternal = layout.bar.useInternalLabels && bar.node().getBBox().width > this.getBBox().width + layout.bar.padding.label * 2
             return useInternal ? Math.abs(xScale(d) - xScale(0)) - this.getBBox().width - layout.bar.padding.label : Math.abs(xScale(d) - xScale(0)) + layout.bar.padding.label
         })
 
-    var zeroline = chart.append('g')
+    chart.append('g')
         .attr('id', 'zeroline')
         .attr('transform', 'translate(' + (yAxisElement.node().getBBox().width + xScale(0)) + ', ' + legendHeight + ')')
-        .call(yAxis.tickFormat('').tickSize(0))
+        .call(yAxis.tickValues([]).tickSizeOuter(0))
+        .attr('font-family', null)
+        .attr('font-size', null)
+        .attr('fill', null)
+        .attr('text-anchor', null)
 
     return chart
 

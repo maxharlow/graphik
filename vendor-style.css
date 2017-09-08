@@ -10,7 +10,7 @@ svg {
 svg #title {
     fill: #222;
     font-size: 25px;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 svg #subtitle {
@@ -20,6 +20,7 @@ svg #subtitle {
 
 svg #footline {
     stroke: #222;
+    stroke-width: 1px;
 }
 
 svg #notes {
@@ -38,24 +39,32 @@ svg #legend {
     font-size: 13px;
 }
 
+svg #x-axis path,
+svg #y-axis path {
+    stroke: #222;
+    stroke-width: 1px;
+}
+
+svg #x-axis .tick line,
+svg #y-axis .tick line {
+    stroke: #222;
+    stroke-width: 1px;
+}
+
 svg #x-axis text,
 svg #y-axis text {
     fill: #222;
     font-size: 14px;
 }
 
-svg .line-chart #x-axis .tick line {
-    stroke: #222;
-    stroke-width: 2px;
-}
-
 svg #grid line {
     stroke: #ddd;
+    stroke-width: 1px;
 }
 
 svg .line-chart #plot path {
-    fill: none;
-    stroke-width: 2px;
+    stroke-width: 4px;
+    stroke-linecap: round;
 }
 
 svg .bar-chart #plot .bar0 rect,
@@ -117,8 +126,7 @@ svg .bar-chart #plot text {
     font-size: 14px;
 }
 
-svg #zeroline {
+svg #zeroline path {
     stroke: #222;
-    stroke-width: 2px;
-    stroke-linecap: square;
+    stroke-width: 1px;
 }

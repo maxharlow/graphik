@@ -9,7 +9,7 @@ Graphik was built to let journalists rapidly build chart images with a predefine
 Usage
 -----
 
-Try it here: [http://maxharlow.com/graphik] (http://maxharlow.com/graphik)
+Try it here: [http://maxharlow.com/graphik](http://maxharlow.com/graphik)
 
 Paste your data in, configure the title and other furniture, then export an image file. If necessary the image can then be imported into Adobe Illustrator for any final touches.
 
@@ -46,10 +46,10 @@ Graphik uses the Apache 2.0 licence. Pull requests very welcome.
 Similar tools
 -------------
 
-* [Datawrapper] (https://datawrapper.de/chart/create)
-* [Chartbuilder] (http://quartz.github.io/Chartbuilder/)
-* [Mr. Chartmaker] (http://vis4.net/blog/posts/seven-features-youll-wantin-your-next-charting-tool/)
-* [Raw Graphs] (http://app.rawgraphs.io/)
-* [Chart Tool] (http://globeandmail.github.io/chart-tool/)
-* [Charted] (http://www.charted.co/)
-* [Playfair] (http://austinclemens.com/Playfair/playfair.html)
+* [Datawrapper](https://datawrapper.de/chart/create)
+* [Chartbuilder](http://quartz.github.io/Chartbuilder)
+* [Mr. Chartmaker](http://vis4.net/blog/posts/seven-features-youll-wantin-your-next-charting-tool)
+* [Raw Graphs](http://app.rawgraphs.io/)
+* [Chart Tool](http://globeandmail.github.io/chart-tool)
+* [Charted](http://www.charted.co/)
+* [Playfair](http://austinclemens.com/Playfair/playfair.html)

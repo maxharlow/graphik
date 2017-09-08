@@ -26,7 +26,10 @@ function GraphikLineChart(svg, config, layout, data, x, y) {
     var tickNumberNegativePad = Math.abs(dataMin) - (tickInterval * tickNumberNegative) < (tickInterval * 0.1) ? tickNumberNegative : tickNumberNegative + 1
     var tickMaximum = dataMax <= 0 ? +(tickInterval * 0.5) : (tickNumberPositivePad * tickInterval) + (tickInterval * 0.001)
     var tickMinimum = dataMin >= 0 ? 0 : -(tickNumberNegativePad * tickInterval) - (tickInterval * 0.001)
-    var tickValues = d3.range(0, tickMinimum, -tickInterval).concat(d3.range(0, tickMaximum, tickInterval)).filter(function (e) { return e !== 0 }).concat([0])
+    var tickValues = d3.range(0, tickMinimum, -tickInterval).concat(d3.range(0, tickMaximum, tickInterval))
+
+    var gridLowest = Math.min.apply(Math, tickValues) < 0 ? Math.min.apply(Math, tickValues) : null
+    var gridValues = tickValues.filter(function (value) { return value !== 0 && value !== gridLowest })
 
     var chart = svg.append('g')
         .attr('id', 'chart')
@@ -62,12 +65,11 @@ function GraphikLineChart(svg, config, layout, data, x, y) {
 
     var legendHeight = legend ? legend.node().getBBox().height + layout.line.padding.postlegend : 0
 
-    var yScale = d3.scale.linear()
+    var yScale = d3.scaleLinear()
         .domain([tickMinimum, tickMaximum])
         .range([layout.line.plotHeight, 0])
 
-    var yAxis = d3.svg.axis()
-        .orient('left')
+    var yAxis = d3.axisLeft()
         .scale(yScale)
         .tickSize(layout.line.tickSizeY, 0)
         .tickPadding(layout.line.padding.tickY)
@@ -78,34 +80,49 @@ function GraphikLineChart(svg, config, layout, data, x, y) {
         .attr('id', 'y-axis')
         .call(yAxis)
 
-    yAxisElement.attr('transform', 'translate(' + yAxisElement.node().getBBox().width + ', ' + legendHeight + ')')
+    yAxisElement
+        .attr('font-family', null)
+        .attr('font-size', null)
+        .attr('transform', 'translate(' + yAxisElement.node().getBBox().width + ', ' + legendHeight + ')')
+
+    yAxisElement.selectAll('.tick')
+        .attr('opacity', null)
 
     var plotWidth = layout.width - layout.padding.left - yAxisElement.node().getBBox().width - layout.line.padding.axisY - layout.padding.right
 
-    var xScale = d3.time.scale()
+    var xScale = d3.scaleTime()
         .domain(d3.extent(data.rows, function (r) { return new Date(r) }))
         .range([0, plotWidth])
 
-    var xAxis = d3.svg.axis()
-        .orient('bottom')
+    var xAxis = d3.axisBottom()
         .scale(xScale)
         .tickSize(layout.line.tickSizeX, 0)
 
-    chart.append('g')
+    var xAxisElement = chart.append('g')
         .attr('id', 'x-axis')
         .attr('transform', 'translate(' + (yAxisElement.node().getBBox().width + layout.line.padding.axisY) + ', ' + (legendHeight + layout.line.plotHeight + layout.line.padding.axisX) + ')')
         .call(xAxis)
-        .selectAll('text')
-        .attr('dy', '-0.35em')
-        .attr('dx', layout.line.padding.tickX)
+
+    xAxisElement
+        .attr('font-family', null)
+        .attr('font-size', null)
+
+    xAxisElement.selectAll('.tick')
+        .attr('opacity', null)
+
+    xAxisElement.selectAll('text')
         .attr('transform', 'rotate(90)')
-        .style('text-anchor', 'start')
+        .attr('x', layout.line.tickSizeX + layout.line.padding.tickX)
+        .attr('y', '0.3em')
+        .attr('dy', null)
+        .attr('text-anchor', 'start')
 
     chart.append('g')
         .attr('id', 'grid')
         .attr('transform', 'translate(' + (yAxisElement.node().getBBox().width + layout.line.padding.axisY) + ', ' + 0 + ')')
+        .lower()
         .selectAll('line')
-        .data(tickValues)
+        .data(gridValues)
         .enter()
         .append('line')
         .attr('x1', 0)
@@ -113,20 +130,25 @@ function GraphikLineChart(svg, config, layout, data, x, y) {
         .attr('x2', plotWidth)
         .attr('y2', function (d) { return yScale(d) + legendHeight })
 
-    var zeroline = chart.append('g')
+    chart.append('g')
         .attr('id', 'zeroline')
         .attr('transform', 'translate(' + (yAxisElement.node().getBBox().width + layout.line.padding.axisY) + ', ' + (legendHeight + yScale(0)) + ')')
-        .call(xAxis.tickFormat('').tickSize(0))
+        .call(xAxis.tickValues([]).tickSizeOuter(0))
+        .attr('font-family', null)
+        .attr('font-size', null)
+        .attr('fill', null)
+        .attr('text-anchor', null)
 
     var plot = chart.append('g')
         .attr('id', 'plot')
         .attr('transform', function (_, i) { return 'translate(' + (yAxisElement.node().getBBox().width + layout.line.padding.axisY) + ' ,' + legendHeight + ')' })
+        .attr('fill', 'none')
 
-    var line = d3.svg.line()
+    var line = d3.line()
         .defined(function (d) { return d !== undefined })
         .y(function (d) { return yScale(d) })
         .x(function (_, i) { return xScale(new Date(data.rows[i])) })
-        .interpolate('basis')
+        .curve(d3.curveCatmullRom)
 
     plot.selectAll('path')
         .data(transpose(data.values))

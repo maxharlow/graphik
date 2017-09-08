@@ -24,7 +24,7 @@
             "inner": 0.2,
             "outer": 0,
             "axisX": 0,
-            "axisY": 1,
+            "axisY": 0,
             "tickX": 2,
             "tickY": 5,
             "label": 5
@@ -33,13 +33,13 @@
     "line": {
         "plotHeight": 300,
         "tickSizeX": 8,
-        "tickSizeY": 0,
+        "tickSizeY": 8,
         "padding": {
             "postlegend": 25,
             "interlegend": 10,
             "axisX": 0,
             "axisY": 0,
-            "tickX": 15,
+            "tickX": 5,
             "tickY": 5
         }
     }
